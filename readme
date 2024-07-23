@@ -1,0 +1,96 @@
+
+Tracer can be run from any CLI or SHELL.  It must be passed certain
+arguments to function properly:
+
+   Tracer objectfile viewoptsfile screenmode
+
+The object file and viewopts file are detailed below.  The screen mode is a
+value between 1 and 4.  Each value corresponds to one of the following four
+screen resolutions:
+
+   1  =  320x200
+   2  =  320x400
+   3  =  640x200
+   4  =  640x400
+
+As the trace progresses, each pixel on the screen will turn white to
+indicate that the pixel has been traced.  When the entire trace is finished,
+the actual image's RGB data will be saved out as three individual files.
+Each one will be appended with a separate extension, ".red", ".grn" or
+".blu".  Programs such as The Art Department, or the public domain View can
+be used to create a viewable picture from these RGB files.
+
+The ViewOpts File
+
+This file contains the necessary information to view an object.  The
+contents of an example follows:
+
+0 0 50
+0 0 0
+0.25
+-50 50 50
+1000 1000
+-750
+500
+
+NOTE: These values have rather technical meanings.  Therefore, you want to
+read through the article before trying to alter any viewing option files.
+
+The first three numbers define a position in 3-D space for the camera.  The
+next three numbers are the position of the point at which the camera is
+looking.  The next value is a scaling value which controls what portion of
+the screen to use for the trace.  A value of 1.0 would specify the entire
+screen, while a value of 0.25 (as in the case above) would specify to use
+only a quarter of the screen.
+
+The following three values are the location of the light source.  The next
+two values are the horizontal and vertical size of the view window.  This is
+essentially the window through which you view your 3-D world.  The next
+value is the position of the "ground" on the Y axis.  And the last value is
+the position of the "center of projection" on the Z axis.  This value, in
+conjunction with the horizontal and vertical sizes of the view window,
+control zooming and field of view (refer to the article for more information
+on this topic).
+
+The GEO Object File
+
+A sample GEO file follows:
+
+3DG1
+4
+10 10 0
+10 -10 0
+-10 -10 0
+-10 10 0
+3 0 1 2 13
+3 2 3 0 13
+
+The first line of the file is used to indentify the file as a GEO object.
+This line should be "3DG1" for Tracer to recognize it.  The next number is
+the number of vertices contained in the object.  However many vertices there
+are in the object defines how many of the following lines are vertex
+positions in 3-D space.  In this example, there are four vertices, hence
+the four lines following the "4" are vertex locations.  The remaining lines
+in the file are polygon descriptions.  The first # of the polygon description
+is the number of vertices contained in the polygon.  The remaining numbers,
+except for the last, are vertex numbers which indicate which vertices in the
+preceeding list are used for the polygon description.  The last number is a
+color code:
+
+0 = black
+1 = blue
+2 = green
+3 = unused
+4 = red
+5 = unused
+6 = brown
+7 = grey
+8 = black
+9 = blue
+10 = green
+11 = unused
+12 = red
+13 = unused
+14 = yellow
+15 = white
+
