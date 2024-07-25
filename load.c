@@ -1,6 +1,6 @@
-#include "exec/types.h"
-#include "exec/memory.h"
-#include "functions.h"
+#include "types.h"
+//#include "exec/memory.h"
+//#include "functions.h"
 #include "stdio.h"
 
 #include "tracer.h"

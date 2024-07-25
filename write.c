@@ -1,7 +1,7 @@
-#include "exec/types.h"
-#include "intuition/intuition.h"
-#include "libraries/dos.h"
-#include "functions.h"
+#include "types.h"
+//#include "intuition/intuition.h"
+//#include "libraries/dos.h"
+//#include "functions.h"
 
 #include "tracer.h"
 

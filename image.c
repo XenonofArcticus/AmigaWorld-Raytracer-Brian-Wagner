@@ -1,6 +1,6 @@
-#include "exec/types.h"
-#include "intuition/intuition.h"
-#include "functions.h"
+#include "types.h"
+//#include "intuition/intuition.h"
+//#include "functions.h"
 
 #include "tracer.h"
 
