@@ -6,7 +6,7 @@
 //#include "functions.h"
 #include "platformstub.h"
 
-
+#include "load.h"
 #include "tracer.h"
 
 extern struct Polygon *polys;

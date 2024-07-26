@@ -1,7 +1,9 @@
+#include <math.h> // system math.h
 #include "types.h"
 //#include "functions.h"
 
 #include "tracer.h"
+#include "math.h" // project's math.h
 
 extern struct Polygon *polys;
 
@@ -15,7 +17,7 @@ extern SHORT scrw, scrh;
 
 extern FLOAT gnx, gny, gnz;
 
-extern FLOAT sqrt();
+// extern FLOAT sqrt();// defined in system math.h
 
 /* Calculate a unit vector by dividing each component by the their */
 /* combined length. */

@@ -3,6 +3,7 @@
 //#include "functions.h"
 
 #include "tracer.h"
+#include "free.h"
 
 extern struct Polygon *polys;
 

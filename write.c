@@ -1,10 +1,10 @@
+#include <string.h>
 #include "types.h"
 //#include "intuition/intuition.h"
 //#include "libraries/dos.h"
 //#include "functions.h"
 
 #include "tracer.h"
-#include <string.h>
 #include "platformstub.h"
 
 extern UBYTE *red, *grn, *blu;

@@ -7,6 +7,10 @@
 #include "platformstub.h"
 
 #include "tracer.h"
+#include "math.h"
+#include "free.h"
+#include "load.h"
+
 
 struct GfxBase *GfxBase;
 
