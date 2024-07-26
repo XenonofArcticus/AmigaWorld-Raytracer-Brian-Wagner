@@ -39,3 +39,8 @@
 *.ninja_deps
 CMakeCache.txt
 build/
+
+#output
+*.red
+*.grn
+*.blu
