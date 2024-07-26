@@ -131,7 +131,7 @@ CHAR *file;
       return(2);
    }
 
-   fscanf(fp, "%d\n", &nvert);
+   fscanf(fp, "%hd\n", &nvert);
 
    if (ferror(fp)) {
       fclose(fp);
@@ -179,7 +179,7 @@ CHAR *file;
       }
 
       for (i = 0; i < cnt; i++) {
-         fscanf(fp, "%d ", &polys[npoly].vtx[i]);
+         fscanf(fp, "%hd ", &polys[npoly].vtx[i]);
 
          if (ferror(fp)) {
             fclose(fp);
