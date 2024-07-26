@@ -1,4 +1,5 @@
 #include "types.h"
+#include "platformstub.h"
 //#include "functions.h"
 
 #include "tracer.h"
