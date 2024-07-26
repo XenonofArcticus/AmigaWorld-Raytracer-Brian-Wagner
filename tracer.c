@@ -10,17 +10,22 @@
 #include "math.h"
 #include "free.h"
 #include "load.h"
+#include "image.h"
+#include "write.h"
 
 
+#ifdef WINDOWED_UI
 struct GfxBase *GfxBase;
 
 struct IntuitionBase *IntuitionBase;
 
+#endif // WINDOWED_UI
+
+struct ViewOpts vopts;
+
 struct Polygon *polys;
 
 struct Vertex *verts;
-
-struct ViewOpts vopts;
 
 UBYTE *red, *grn, *blu;
 
@@ -34,6 +39,7 @@ VOID main(argc, argv)
 SHORT argc;
 CHAR **argv;
 {
+#ifdef WINDOWED_UI
    struct NewScreen ns;
 
    struct NewWindow nw;
@@ -45,8 +51,13 @@ CHAR **argv;
    struct RastPort *rp;
 
    struct ViewPort *vp;
+#endif // WINDOWED_UI
 
-   LONG size1, size2, size3, vmod, err;
+   LONG size1, size2, size3,
+#ifdef WINDOWED_UI
+    vmod,
+#endif // WINDOWED_UI
+     err;
 
    /* Check for correct number of arguments. */
 
@@ -66,6 +77,7 @@ CHAR **argv;
       return;
    }
 
+#ifdef WINDOWED_UI
    /* Open graphics & intuition libraries. */
 
    GfxBase = (VOID *)OpenLibrary("graphics.library", NULL);
@@ -85,6 +97,7 @@ CHAR **argv;
 
       return;
    }
+#endif // WINDOWED_UI
 
    /* Allocate object storage buffers. */
 
@@ -93,10 +106,11 @@ CHAR **argv;
    polys = AllocMem(size1, MEMF_CLEAR);
 
    if (polys == NULL) {
+#ifdef WINDOWED_UI
       CloseLibrary(IntuitionBase);
 
       CloseLibrary(GfxBase);
-
+#endif // WINDOWED_UI
       puts("Unable to allocate 'polys' buffer");
 
       return;
@@ -109,10 +123,11 @@ CHAR **argv;
    if (verts == NULL) {
       FreeMem(polys, size1);
 
+#ifdef WINDOWED_UI
       CloseLibrary(IntuitionBase);
 
       CloseLibrary(GfxBase);
-
+#endif // WINDOWED_UI
       puts("Unable to allocate 'verts' buffer");
 
       return;
@@ -124,28 +139,36 @@ CHAR **argv;
       scrw = 320;
       scrh = 200;
 
+#ifdef WINDOWED_UI
       vmod = NULL;
+#endif // WINDOWED_UI
    } else
 
    if (scrm == 2) {
       scrw = 320;
       scrh = 400;
 
+#ifdef WINDOWED_UI
       vmod = LACE;
+#endif // WINDOWED_UI
    } else
 
    if (scrm == 3) {
       scrw = 640;
       scrh = 200;
 
+#ifdef WINDOWED_UI
       vmod = HIRES;
+#endif // WINDOWED_UI
    } else
 
    if (scrm == 4) {
       scrw = 640;
       scrh = 400;
 
+#ifdef WINDOWED_UI
       vmod = HIRES | LACE;
+#endif // WINDOWED_UI
    }
 
    /* Allocate RGB buffers. */
@@ -165,14 +188,18 @@ CHAR **argv;
 
       FreeMem(polys, size1);
 
+#ifdef WINDOWED_UI
       CloseLibrary(IntuitionBase);
 
       CloseLibrary(GfxBase);
+#endif // WINDOWED_UI
 
       puts("Unable to allocate RGB buffers");
 
       return;
    }
+
+#ifdef WINDOWED_UI
 
    /* Open screen. */
 
@@ -263,6 +290,7 @@ CHAR **argv;
    SetRGB4(vp, (LONG)1, (LONG)9, (LONG)9, (LONG)9);
 
    ShowTitle(sp, FALSE);
+#endif // WINDOWED_UI
 
    /* Initialize that no object exists. */
 
@@ -281,9 +309,11 @@ CHAR **argv;
    if (err) {
       freevtxarrays();
 
+#ifdef WINDOWED_UI
       CloseWindow(wp);
 
       CloseScreen(sp);
+#endif // WINDOWED_UI
 
       FreeMem(red, size3);
       FreeMem(grn, size3);
@@ -293,9 +323,11 @@ CHAR **argv;
 
       FreeMem(polys, size1);
 
+#ifdef WINDOWED_UI
       CloseLibrary(IntuitionBase);
 
       CloseLibrary(GfxBase);
+#endif // WINDOWED_UI
 
       if (err == 1) puts("DOS Error loading object");
       else
@@ -317,9 +349,11 @@ CHAR **argv;
    if (err) {
       freevtxarrays();
 
+#ifdef WINDOWED_UI
       CloseWindow(wp);
 
       CloseScreen(sp);
+#endif // WINDOWED_UI
 
       FreeMem(red, size3);
       FreeMem(grn, size3);
@@ -329,9 +363,11 @@ CHAR **argv;
 
       FreeMem(polys, size1);
 
+#ifdef WINDOWED_UI
       CloseLibrary(IntuitionBase);
 
       CloseLibrary(GfxBase);
+#endif // WINDOWED_UI
 
       puts("DOS error loading view file");
 
@@ -344,7 +380,11 @@ CHAR **argv;
 
    calcnormals();
 
-   traceimage(rp);
+   traceimage(
+#ifdef WINDOWED_UI
+      rp
+#endif / WINDOWED_UI
+      );
 
    writeRGB(argv[1]);
 
@@ -352,9 +392,11 @@ CHAR **argv;
 
    freevtxarrays();
 
-   CloseWindow(wp);
+#ifdef WINDOWED_UI
+      CloseWindow(wp);
 
-   CloseScreen(sp);
+      CloseScreen(sp);
+#endif // WINDOWED_UI
 
    FreeMem(red, size3);
    FreeMem(grn, size3);
@@ -364,9 +406,11 @@ CHAR **argv;
 
    FreeMem(polys, size1);
 
-   CloseLibrary(IntuitionBase);
+#ifdef WINDOWED_UI
+      CloseLibrary(IntuitionBase);
 
-   CloseLibrary(GfxBase);
+      CloseLibrary(GfxBase);
+#endif // WINDOWED_UI
 
    return;
 }

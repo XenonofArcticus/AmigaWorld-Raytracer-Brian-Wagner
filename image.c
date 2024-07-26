@@ -34,8 +34,14 @@ SHORT x, y;
 
 /* Send a ray through each pixel of final image. */
 
-VOID traceimage(rp)
+VOID traceimage(
+#ifdef WINDOWED_UI
+   rp
+#endif // WINDOWED_UI
+   )
+#ifdef WINDOWED_UI
 struct RastPort *rp;
+#endif // WINDOWED_UI
 {
    struct Ray ray;
 
@@ -62,9 +68,9 @@ struct RastPort *rp;
 
    actw = scrw * vopts.scl;
    acth = scrh * vopts.scl;
-
+#ifdef WINDOWED_UI
    SetAPen(rp, (LONG)1);
-
+#endif // WINDOWED_UI
    for (i = 0; i < actw; i++) {
       for (j = 0; j < acth; j++) {
          px = (FLOAT)i + 0.5;
@@ -125,9 +131,9 @@ struct RastPort *rp;
 
             storeRGB(&color, i, j);
          }
-
+#ifdef WINDOWED_UI 
          WritePixel(rp, (LONG)i, (LONG)j);
-
+#endif // WINDOWED_UI 
          continue;
       }
    }

@@ -4,4 +4,8 @@
 
 VOID storeRGB(struct Color *c, SHORT x, SHORT y);
 
-VOID traceimage(struct RastPort *rp);
+VOID traceimage(
+#ifdef WINDOWED_UI
+    struct RastPort *rp
+#endif // WINDOWED_UI
+    );
