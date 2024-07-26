@@ -1,7 +1,10 @@
+#include <stdlib.h>
+
 #include "types.h"
 //#include "exec/memory.h"
 //#include "intuition/intuition.h"
 //#include "functions.h"
+#include "platformstub.h"
 
 #include "tracer.h"
 

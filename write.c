@@ -4,6 +4,8 @@
 //#include "functions.h"
 
 #include "tracer.h"
+#include <string.h>
+#include "platformstub.h"
 
 extern UBYTE *red, *grn, *blu;
 
