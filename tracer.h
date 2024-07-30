@@ -1,3 +1,6 @@
+#ifndef INCLUDE_POLYGON_H
+#define INCLUDE_POLYGON_H
+
 #define MAXPOLYS  1500
 #define MAXVERTS  1500
 
@@ -46,3 +49,4 @@ struct ViewOpts {
    FLOAT cpd;
 };
 
+#endif // INCLUDE_POLYGON_H

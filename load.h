@@ -1,4 +1,5 @@
 #include "types.h"
+#include "tracer.h"
 VOID convertcol(LONG col, struct Polygon *poly);
 
 /* Load GEO object and store in the previously allocated buffers.  Vertex */
