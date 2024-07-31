@@ -12,6 +12,7 @@
 #include "load.h"
 #include "image.h"
 #include "write.h"
+#include <time.h>
 
 
 #ifdef WINDOWED_UI
@@ -374,6 +375,11 @@ CHAR **argv;
       return;
    }
 
+   /* start timing computation */
+   clock_t start_t, end_t;
+   double total_t;
+   start_t = clock();
+
    /* Call each function in the display process. */
 
    transform();
@@ -386,6 +392,10 @@ CHAR **argv;
 #endif / WINDOWED_UI
       );
 
+   end_t = clock();
+   total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+   printf("Total time taken by CPU: %f\n", total_t  );
+   
    writeRGB(argv[1]);
 
    /* Free all allocations & close all openings. */
