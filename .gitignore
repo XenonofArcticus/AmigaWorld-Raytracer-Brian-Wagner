@@ -39,6 +39,7 @@
 *.ninja_deps
 CMakeCache.txt
 build/
+vcpkg_installed/
 
 #output
 *.red
