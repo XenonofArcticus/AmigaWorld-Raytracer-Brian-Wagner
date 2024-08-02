@@ -1,14 +1,26 @@
-cmake_minimum_required(VERSION 3.8)
-
-set(SDL2_DIR "vcpkg_installed/x64-windows/share/sdl2")
-
-find_package(SDL2 CONFIG REQUIRED)
+cmake_minimum_required(VERSION 3.27)
 
 project("tracer")
 
-add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_CRT_DECLARE_NONSTDC_NAMES=0)
+find_package(SDL2 CONFIG REQUIRED)
 
-add_executable(tracer "free.c" "image.c" "load.c" "math.c" "platformstub.c" "tracer.c" "write.c")
+set(SOURCE_FILES 
+    free.c
+    image.c
+    load.c
+    math.c
+    platformstub.c
+    tracer.c
+    write.c
+)
+
+add_executable(tracer ${SOURCE_FILES})
+
+target_compile_definitions(tracer
+    PUBLIC
+    _CRT_SECURE_NO_WARNINGS
+    _CRT_DECLARE_NONSTDC_NAMES=0
+)
 
 target_link_libraries(tracer
     PRIVATE
