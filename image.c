@@ -1,6 +1,7 @@
 #include "types.h"
-//#include "intuition/intuition.h"
-//#include "functions.h"
+#ifdef WINDOWED_UI
+#include <SDL2/SDL.h>
+#endif // WINDOWED_UI
 
 #include "tracer.h"
 #include "math.h"
@@ -40,7 +41,7 @@ VOID traceimage(
 #endif // WINDOWED_UI
    )
 #ifdef WINDOWED_UI
-struct RastPort *rp;
+SDL_Renderer *rp;
 #endif // WINDOWED_UI
 {
    struct Ray ray;
@@ -69,7 +70,7 @@ struct RastPort *rp;
    actw = scrw * vopts.scl;
    acth = scrh * vopts.scl;
 #ifdef WINDOWED_UI
-   SetAPen(rp, (LONG)1);
+   SDL_SetRenderDrawColor(rp, 0, 0, 0, 0);
 #endif // WINDOWED_UI
    for (i = 0; i < actw; i++) {
       for (j = 0; j < acth; j++) {
@@ -132,7 +133,10 @@ struct RastPort *rp;
             storeRGB(&color, i, j);
          }
 #ifdef WINDOWED_UI 
-         WritePixel(rp, (LONG)i, (LONG)j);
+             SDL_SetRenderDrawColor(rp, (Uint8)color.r, (Uint8)color.g, (Uint8)color.b, 255);
+             SDL_RenderDrawPoint(rp, i, j);
+             SDL_RenderPresent(rp);
+
 #endif // WINDOWED_UI 
          continue;
       }

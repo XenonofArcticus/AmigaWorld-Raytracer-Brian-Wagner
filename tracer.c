@@ -1,9 +1,10 @@
 #include <stdlib.h>
 
 #include "types.h"
-//#include "exec/memory.h"
-//#include "intuition/intuition.h"
-//#include "functions.h"
+#ifdef WINDOWED_UI
+#include <SDL2/SDL.h>
+#endif // WINDOWED_UI
+
 #include "platformstub.h"
 
 #include "tracer.h"
@@ -14,13 +15,6 @@
 #include "write.h"
 #include <time.h>
 
-
-#ifdef WINDOWED_UI
-struct GfxBase *GfxBase;
-
-struct IntuitionBase *IntuitionBase;
-
-#endif // WINDOWED_UI
 
 struct ViewOpts vopts;
 
@@ -36,35 +30,36 @@ SHORT scrm, scrw, scrh;
 
 FLOAT gnx, gny, gnz;
 
+#ifdef WINDOWED_UI
+int SDL_main(int argc, char *argv[])
+{
+    SDL_Renderer *rp;
+    SDL_Window *wp;
+#else // !WINDOWED_UI
 VOID main(argc, argv)
 SHORT argc;
 CHAR **argv;
 {
-#ifdef WINDOWED_UI
-   struct NewScreen ns;
-
-   struct NewWindow nw;
-
-   struct Screen *sp;
-
-   struct Window *wp;
-
-   struct RastPort *rp;
-
-   struct ViewPort *vp;
-#endif // WINDOWED_UI
+#endif // !WINDOWED_UI
 
    LONG size1, size2, size3,
-#ifdef WINDOWED_UI
-    vmod,
-#endif // WINDOWED_UI
      err;
+#ifdef WINDOWED_UI
+      if(SDL_Init(SDL_INIT_VIDEO)) // SDL_Init returns non-zero for failure
+      {
+      puts("Failed to SDL_Init");
+      exit(1); // exit immediately if SDL doesn't initialize
+      }
+#endif // WINDOWED_UI
 
    /* Check for correct number of arguments. */
 
    if (argc != 4) {
       puts("Usage: tracer objectfile viewoptsfile screenmode");
 
+#ifdef WINDOWED_UI
+      SDL_Quit();
+#endif // WINDOWED_UI
       return;
    }
 
@@ -75,30 +70,12 @@ CHAR **argv;
    if (scrm <= 0 || scrm > 4) {
       puts("Illegal screen mode specified");
 
-      return;
-   }
-
 #ifdef WINDOWED_UI
-   /* Open graphics & intuition libraries. */
-
-   GfxBase = (VOID *)OpenLibrary("graphics.library", NULL);
-
-   if (GfxBase == NULL) {
-      puts("Unable to open graphics.library");
-
-      return;
-   }
-
-   IntuitionBase = (VOID *)OpenLibrary("intuition.library", NULL);
-
-   if (IntuitionBase == NULL) {
-      CloseLibrary(GfxBase);
-
-      puts("Unable to open intuition.library");
-
-      return;
-   }
+      SDL_Quit();
 #endif // WINDOWED_UI
+      return;
+   }
+
 
    /* Allocate object storage buffers. */
 
@@ -107,13 +84,12 @@ CHAR **argv;
    polys = AllocMem(size1, MEMF_CLEAR);
 
    if (polys == NULL) {
-#ifdef WINDOWED_UI
-      CloseLibrary(IntuitionBase);
 
-      CloseLibrary(GfxBase);
-#endif // WINDOWED_UI
       puts("Unable to allocate 'polys' buffer");
 
+#ifdef WINDOWED_UI
+      SDL_Quit();
+#endif // WINDOWED_UI
       return;
    }
 
@@ -124,13 +100,11 @@ CHAR **argv;
    if (verts == NULL) {
       FreeMem(polys, size1);
 
-#ifdef WINDOWED_UI
-      CloseLibrary(IntuitionBase);
-
-      CloseLibrary(GfxBase);
-#endif // WINDOWED_UI
       puts("Unable to allocate 'verts' buffer");
 
+#ifdef WINDOWED_UI
+      SDL_Quit();
+#endif // WINDOWED_UI
       return;
    }
 
@@ -139,37 +113,21 @@ CHAR **argv;
    if (scrm == 1) {
       scrw = 320;
       scrh = 200;
-
-#ifdef WINDOWED_UI
-      vmod = NULL;
-#endif // WINDOWED_UI
    } else
 
    if (scrm == 2) {
       scrw = 320;
       scrh = 400;
-
-#ifdef WINDOWED_UI
-      vmod = LACE;
-#endif // WINDOWED_UI
    } else
 
    if (scrm == 3) {
       scrw = 640;
       scrh = 200;
-
-#ifdef WINDOWED_UI
-      vmod = HIRES;
-#endif // WINDOWED_UI
    } else
 
    if (scrm == 4) {
       scrw = 640;
       scrh = 400;
-
-#ifdef WINDOWED_UI
-      vmod = HIRES | LACE;
-#endif // WINDOWED_UI
    }
 
    /* Allocate RGB buffers. */
@@ -189,80 +147,20 @@ CHAR **argv;
 
       FreeMem(polys, size1);
 
-#ifdef WINDOWED_UI
-      CloseLibrary(IntuitionBase);
-
-      CloseLibrary(GfxBase);
-#endif // WINDOWED_UI
-
       puts("Unable to allocate RGB buffers");
 
+#ifdef WINDOWED_UI
+      SDL_Quit();
+#endif // WINDOWED_UI
       return;
    }
 
 #ifdef WINDOWED_UI
-
-   /* Open screen. */
-
-   ns.LeftEdge = 0;
-   ns.TopEdge = 0;
-   ns.Width = scrw;
-   ns.Height = scrh;
-   ns.Depth = 1;
-   ns.DetailPen = 0;
-   ns.BlockPen = 0;
-   ns.ViewModes = vmod;
-   ns.Type = CUSTOMSCREEN | SCREENQUIET;
-   ns.Font = NULL;
-   ns.DefaultTitle = NULL;
-   ns.Gadgets = NULL;
-   ns.CustomBitMap = NULL;
-
-   sp = OpenScreen(&ns);
-
-   if (sp == NULL) {
-      FreeMem(red, size3);
-      FreeMem(grn, size3);
-      FreeMem(blu, size3);
-
-      FreeMem(verts, size2);
-
-      FreeMem(polys, size1);
-
-      CloseLibrary(IntuitionBase);
-
-      CloseLibrary(GfxBase);
-
-      puts("Unable to open screen");
-
-      return;
-   }
-
    /* Open window. */
 
-   nw.LeftEdge = 0;
-   nw.TopEdge = 0;
-   nw.Width = scrw;
-   nw.Height = scrh;
-   nw.DetailPen = 0;
-   nw.BlockPen = 0;
-   nw.IDCMPFlags = RAWKEY;
-   nw.Flags = SMART_REFRESH | BACKDROP | BORDERLESS | ACTIVATE | RMBTRAP;
-   nw.FirstGadget = NULL;
-   nw.CheckMark = NULL;
-   nw.Title = NULL;
-   nw.Screen = sp;
-   nw.BitMap = NULL;
-   nw.MinWidth = 0;
-   nw.MinHeight = 0;
-   nw.MaxWidth = 0;
-   nw.MaxHeight = 0;
-   nw.Type = CUSTOMSCREEN;
-
-   wp = OpenWindow(&nw);
+   SDL_CreateWindowAndRenderer(scrw, scrh, 0, &wp, &rp); // returns -1 on fail and wp=NULL
 
    if (wp == NULL) {
-      CloseScreen(sp);
 
       FreeMem(red, size3);
       FreeMem(grn, size3);
@@ -271,26 +169,14 @@ CHAR **argv;
       FreeMem(verts, size2);
 
       FreeMem(polys, size1);
-
-      CloseLibrary(IntuitionBase);
-
-      CloseLibrary(GfxBase);
 
       puts("Unable to open window");
 
+#ifdef WINDOWED_UI
+      SDL_Quit();
+#endif // WINDOWED_UI
       return;
    }
-
-   rp = wp->RPort;
-
-   vp = &sp->ViewPort;
-
-   /* Set screen colors. */
-
-   SetRGB4(vp, (LONG)0, (LONG)0, (LONG)0, (LONG)0);
-   SetRGB4(vp, (LONG)1, (LONG)9, (LONG)9, (LONG)9);
-
-   ShowTitle(sp, FALSE);
 #endif // WINDOWED_UI
 
    /* Initialize that no object exists. */
@@ -311,9 +197,8 @@ CHAR **argv;
       freevtxarrays();
 
 #ifdef WINDOWED_UI
-      CloseWindow(wp);
-
-      CloseScreen(sp);
+    SDL_DestroyRenderer(rp);
+    SDL_DestroyWindow(wp);
 #endif // WINDOWED_UI
 
       FreeMem(red, size3);
@@ -323,12 +208,6 @@ CHAR **argv;
       FreeMem(verts, size2);
 
       FreeMem(polys, size1);
-
-#ifdef WINDOWED_UI
-      CloseLibrary(IntuitionBase);
-
-      CloseLibrary(GfxBase);
-#endif // WINDOWED_UI
 
       if (err == 1) puts("DOS Error loading object");
       else
@@ -340,6 +219,9 @@ CHAR **argv;
       else
       if (err == 5) puts("Maximum polygon count exceeded");
 
+#ifdef WINDOWED_UI
+      SDL_Quit();
+#endif // WINDOWED_UI
       return;
    }
 
@@ -351,9 +233,8 @@ CHAR **argv;
       freevtxarrays();
 
 #ifdef WINDOWED_UI
-      CloseWindow(wp);
-
-      CloseScreen(sp);
+    SDL_DestroyRenderer(rp);
+    SDL_DestroyWindow(wp);
 #endif // WINDOWED_UI
 
       FreeMem(red, size3);
@@ -365,12 +246,14 @@ CHAR **argv;
       FreeMem(polys, size1);
 
 #ifdef WINDOWED_UI
-      CloseLibrary(IntuitionBase);
 
-      CloseLibrary(GfxBase);
 #endif // WINDOWED_UI
 
       puts("DOS error loading view file");
+
+#ifdef WINDOWED_UI
+      SDL_Quit();
+#endif // WINDOWED_UI
 
       return;
    }
@@ -403,9 +286,8 @@ CHAR **argv;
    freevtxarrays();
 
 #ifdef WINDOWED_UI
-      CloseWindow(wp);
-
-      CloseScreen(sp);
+    SDL_DestroyRenderer(rp);
+    SDL_DestroyWindow(wp);
 #endif // WINDOWED_UI
 
    FreeMem(red, size3);
@@ -417,9 +299,7 @@ CHAR **argv;
    FreeMem(polys, size1);
 
 #ifdef WINDOWED_UI
-      CloseLibrary(IntuitionBase);
-
-      CloseLibrary(GfxBase);
+   SDL_Quit();
 #endif // WINDOWED_UI
 
    return;

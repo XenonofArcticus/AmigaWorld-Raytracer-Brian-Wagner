@@ -20,6 +20,7 @@ target_compile_definitions(tracer
     PUBLIC
     _CRT_SECURE_NO_WARNINGS
     _CRT_DECLARE_NONSTDC_NAMES=0
+    WINDOWED_UI
 )
 
 target_link_libraries(tracer
