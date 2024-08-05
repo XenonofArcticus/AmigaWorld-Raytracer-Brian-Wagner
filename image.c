@@ -135,7 +135,8 @@ SDL_Renderer *rp;
 #ifdef WINDOWED_UI 
              SDL_SetRenderDrawColor(rp, (Uint8)color.r, (Uint8)color.g, (Uint8)color.b, 255);
              SDL_RenderDrawPoint(rp, i, j);
-             SDL_RenderPresent(rp);
+             {static unsigned int PresentInterval; if(!((++PresentInterval + 1) % 6400))SDL_RenderPresent(rp);}
+             
 
 #endif // WINDOWED_UI 
          continue;
