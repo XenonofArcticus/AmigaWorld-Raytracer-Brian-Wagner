@@ -5,6 +5,7 @@
 
 #include "tracer.h"
 #include "math.h"
+#include <Windows.h>
 
 extern struct Polygon *polys;
 
@@ -44,6 +45,9 @@ VOID traceimage(
 SDL_Renderer *rp;
 #endif // WINDOWED_UI
 {
+#ifdef WINDOWED_UI
+SDL_Event event;
+#endif // WINDOWED_UI
    struct Ray ray;
 
    struct Intersection isec;
@@ -135,9 +139,14 @@ SDL_Renderer *rp;
 #ifdef WINDOWED_UI 
              SDL_SetRenderDrawColor(rp, (Uint8)color.r, (Uint8)color.g, (Uint8)color.b, 255);
              SDL_RenderDrawPoint(rp, i, j);
-             {static unsigned int PresentInterval; if(!((++PresentInterval + 1) % 6400))SDL_RenderPresent(rp);}
-             
-
+             // present graphics and run event loop
+             static unsigned int PresentInterval;
+             // only do the work every 6400 pixels traced, to minimize overhead
+             if(!((++PresentInterval + 1) % 6400)) {
+               SDL_RenderPresent(rp);
+               if (SDL_PollEvent(&event) && event.type == SDL_QUIT)
+                  return; // kind of an abrupt exit, but the code is simple enough to do it this way
+             }
 #endif // WINDOWED_UI 
          continue;
       }
