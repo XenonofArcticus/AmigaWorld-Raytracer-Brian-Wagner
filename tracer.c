@@ -26,7 +26,7 @@ UBYTE *red, *grn, *blu;
 
 SHORT npoly, nvert;
 
-SHORT scrm, scrw, scrh;
+SHORT widtharg, heightarg, scrw, scrh;
 
 FLOAT gnx, gny, gnz;
 
@@ -54,8 +54,8 @@ CHAR **argv;
 
    /* Check for correct number of arguments. */
 
-   if (argc != 4) {
-      puts("Usage: tracer objectfile viewoptsfile screenmode");
+   if (argc != 5) {
+      puts("Usage: tracer objectfile viewoptsfile width height");
 
 #ifdef WINDOWED_UI
       SDL_Quit();
@@ -63,12 +63,13 @@ CHAR **argv;
       return;
    }
 
-   /* Make sure screen mode is valid. */
+   /* Fetch pixel dimensions. */
 
-   scrm = atoi(argv[3]);
+   widtharg = atoi(argv[3]);
+   heightarg = atoi(argv[4]);
 
-   if (scrm <= 0 || scrm > 4) {
-      puts("Illegal screen mode specified");
+   if (widtharg <= 0 || heightarg < 0) {
+      puts("Illegal dimensions specified");
 
 #ifdef WINDOWED_UI
       SDL_Quit();
@@ -110,25 +111,8 @@ CHAR **argv;
 
    /* Assign screen dimensions based on screen mode. */
 
-   if (scrm == 1) {
-      scrw = 320;
-      scrh = 200;
-   } else
-
-   if (scrm == 2) {
-      scrw = 320;
-      scrh = 400;
-   } else
-
-   if (scrm == 3) {
-      scrw = 640;
-      scrh = 200;
-   } else
-
-   if (scrm == 4) {
-      scrw = 640;
-      scrh = 400;
-   }
+   scrw = widtharg;
+   scrh = heightarg;
 
    /* Allocate RGB buffers. */
 
