@@ -279,7 +279,7 @@ CHAR **argv;
    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
    printf("Total time taken by CPU: %f\n", total_t  );
    
-   writeRGB(argv[1]);
+   saveImageToFile(argv[1]);
 
    /* Free all allocations & close all openings. */
 
