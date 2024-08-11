@@ -33,7 +33,6 @@
 
 # Developer toolchain cruft
 *.pdb
-*.cmake
 *.ninja
 *.ninja_log
 *.ninja_deps
