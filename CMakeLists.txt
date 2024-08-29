@@ -18,6 +18,9 @@ set(SOURCE_FILES
 
 add_executable(tracer ${SOURCE_FILES})
 
+include(CTest)
+enable_testing()
+
 target_compile_definitions(tracer
     PUBLIC
     _CRT_SECURE_NO_WARNINGS
@@ -34,3 +37,21 @@ target_link_libraries(tracer
 
 target_link_libraries(tracer PRIVATE $<IF:$<TARGET_EXISTS:spng::spng>,spng::spng,spng::spng_static>) 
 
+# Define the command that generates the output file
+add_test(NAME pyrs256k-generate
+         COMMAND ${CMAKE_BINARY_DIR}/tracer pyrs pyrsopts 640 400
+         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
+# Compare testdata output and unverified recent output
+add_test(NAME pyrs256k-compare
+         COMMAND ${CMAKE_COMMAND} -E compare_files
+         ${CMAKE_SOURCE_DIR}/pyrs.png
+         ${CMAKE_SOURCE_DIR}/testdata/pyrs.png
+)
+
+# Ensure that the comparison test only runs after the output is generated
+add_custom_target(run_tests
+    COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
+    DEPENDS pyrs256k-generate pyrs256k-compare
+)
