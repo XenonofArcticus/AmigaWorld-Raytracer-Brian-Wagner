@@ -60,7 +60,7 @@ CHAR **argv;
 #ifdef WINDOWED_UI
       SDL_Quit();
 #endif // WINDOWED_UI
-      return;
+      return 1;
    }
 
    /* Fetch pixel dimensions. */
@@ -74,7 +74,7 @@ CHAR **argv;
 #ifdef WINDOWED_UI
       SDL_Quit();
 #endif // WINDOWED_UI
-      return;
+      return 1;
    }
 
 
@@ -91,7 +91,7 @@ CHAR **argv;
 #ifdef WINDOWED_UI
       SDL_Quit();
 #endif // WINDOWED_UI
-      return;
+      return 1;
    }
 
    size2 = sizeof(struct Vertex) * MAXVERTS;
@@ -106,7 +106,7 @@ CHAR **argv;
 #ifdef WINDOWED_UI
       SDL_Quit();
 #endif // WINDOWED_UI
-      return;
+      return 1;
    }
 
    /* Assign screen dimensions based on screen mode. */
@@ -136,7 +136,7 @@ CHAR **argv;
 #ifdef WINDOWED_UI
       SDL_Quit();
 #endif // WINDOWED_UI
-      return;
+      return 1;
    }
 
 #ifdef WINDOWED_UI
@@ -159,7 +159,7 @@ CHAR **argv;
 #ifdef WINDOWED_UI
       SDL_Quit();
 #endif // WINDOWED_UI
-      return;
+      return 1;
    }
 #endif // WINDOWED_UI
 
@@ -206,7 +206,7 @@ CHAR **argv;
 #ifdef WINDOWED_UI
       SDL_Quit();
 #endif // WINDOWED_UI
-      return;
+      return 1;
    }
 
    /* Load viewing options. */
@@ -239,7 +239,7 @@ CHAR **argv;
       SDL_Quit();
 #endif // WINDOWED_UI
 
-      return;
+      return 1;
    }
 
    /* start timing computation */
@@ -286,6 +286,6 @@ CHAR **argv;
    SDL_Quit();
 #endif // WINDOWED_UI
 
-   return;
+   return 0;
 }
 

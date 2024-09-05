@@ -39,15 +39,16 @@ target_link_libraries(tracer PRIVATE $<IF:$<TARGET_EXISTS:spng::spng>,spng::spng
 
 # Define the command that generates the output file
 add_test(NAME pyrs256k-generate
-         COMMAND ${CMAKE_BINARY_DIR}/tracer pyrs pyrsopts 640 400
+         COMMAND ${CMAKE_BINARY_DIR}/tracer ${CMAKE_SOURCE_DIR}/pyrs ${CMAKE_SOURCE_DIR}/pyrsopts 640 400
          WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
+         )
 
 # Compare testdata output and unverified recent output
 add_test(NAME pyrs256k-compare
          COMMAND ${CMAKE_COMMAND} -E compare_files
          ${CMAKE_SOURCE_DIR}/pyrs.png
          ${CMAKE_SOURCE_DIR}/testdata/pyrs.png
+         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
 # Ensure that the comparison test only runs after the output is generated
