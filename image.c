@@ -5,7 +5,9 @@
 
 #include "tracer.h"
 #include "math.h"
+#ifdef _WIN32
 #include <Windows.h>
+#endif // _WIN32
 
 extern struct Polygon *polys;
 
