@@ -27,7 +27,8 @@ CHAR *name;
 int writePNG(CHAR *name)
 {
    CHAR file[500];
-   LONG *fh, err;
+   LONG err;
+   FILE *fh;
    unsigned char *image;
    size_t length;
    // inspired by https://github.com/randy408/libspng/blob/v0.7.3/examples/example.c
@@ -101,7 +102,7 @@ int writePNG(CHAR *name)
 
    strcat(file, ".png");
    
-   fh = (LONG *)fopen(file, "wb");
+   fh = fopen(file, "wb");
 
    if (fh != NULL) {
    fwrite(png_buf, png_size, 1, fh);
@@ -128,7 +129,8 @@ VOID writeRGB(name)
 CHAR *name;
 {
    CHAR file[500];
-   LONG size, *fh, err;
+   LONG size, err;
+   FILE *fh;
 
    size = (LONG)scrw * scrh;
 
@@ -136,7 +138,7 @@ CHAR *name;
 
    strcat(file, ".red");
 
-   fh = (LONG *)fopen(file, "wb");
+   fh = fopen(file, "wb");
 
    if (fh == NULL) {
       puts("Unable to open RED file");
@@ -160,7 +162,7 @@ CHAR *name;
 
    strcat(file, ".grn");
 
-   fh = (LONG *)fopen(file, "wb");
+   fh = fopen(file, "wb");
 
    if (fh == NULL) {
       puts("Unable to open GRN file");
@@ -184,7 +186,7 @@ CHAR *name;
 
    strcat(file, ".blu");
 
-   fh = (LONG *)fopen(file, "wb");
+   fh = fopen(file, "wb");
 
    if (fh == NULL) {
       puts("Unable to open BLU file");
