@@ -1,6 +1,4 @@
 #include "types.h"
-#include "platformstub.h"
-//#include "functions.h"
 
 #include "tracer.h"
 #include "free.h"
@@ -21,7 +19,7 @@ VOID freevtxarrays()
 
       if (polys[i].vtx == NULL) continue;
 
-      FreeMem(polys[i].vtx, size);
+      free(polys[i].vtx);
 
       continue;
    }

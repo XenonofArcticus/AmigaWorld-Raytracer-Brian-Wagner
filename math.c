@@ -1,6 +1,5 @@
 #include <math.h> // system math.h
 #include "types.h"
-//#include "functions.h"
 
 #include "tracer.h"
 #include "math.h" // project's math.h

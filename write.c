@@ -1,11 +1,7 @@
 #include <string.h>
 #include "types.h"
-//#include "intuition/intuition.h"
-//#include "libraries/dos.h"
-//#include "functions.h"
 
 #include "tracer.h"
-#include "platformstub.h"
 
 #ifdef OUTPUT_PNG
 #include <spng.h>
@@ -105,11 +101,11 @@ int writePNG(CHAR *name)
 
    strcat(file, ".png");
    
-   fh = (LONG *)Open(file, MODE_NEWFILE);
+   fh = (LONG *)fopen(file, "wb");
 
    if (fh != NULL) {
-   Write(fh, png_buf, png_size);
-   Close(fh);
+   fwrite(png_buf, png_size, 1, fh);
+   fclose(fh);
    }
 
     /* User owns the buffer after a successful call */
@@ -140,7 +136,7 @@ CHAR *name;
 
    strcat(file, ".red");
 
-   fh = (LONG *)Open(file, MODE_NEWFILE);
+   fh = (LONG *)fopen(file, "wb");
 
    if (fh == NULL) {
       puts("Unable to open RED file");
@@ -148,23 +144,23 @@ CHAR *name;
       return;
    }
 
-   err = Write(fh, red, size);
+   err = fwrite(red, size, 1, fh);
 
    if (err == -1) {
-      Close(fh);
+      fclose(fh);
 
       puts("Error writing RED file");
 
       return;
    }
 
-   Close(fh);
+   fclose(fh);
 
    strcpy(file, name);
 
    strcat(file, ".grn");
 
-   fh = (LONG *)Open(file, MODE_NEWFILE);
+   fh = (LONG *)fopen(file, "wb");
 
    if (fh == NULL) {
       puts("Unable to open GRN file");
@@ -172,23 +168,23 @@ CHAR *name;
       return;
    }
 
-   err = Write(fh, grn, size);
+   err = fwrite(grn, size, 1, fh);
 
    if (err == -1) {
-      Close(fh);
+      fclose(fh);
 
       puts("Error writing GRN file");
 
       return;
    }
 
-   Close(fh);
+   fclose(fh);
 
    strcpy(file, name);
 
    strcat(file, ".blu");
 
-   fh = (LONG *)Open(file, MODE_NEWFILE);
+   fh = (LONG *)fopen(file, "wb");
 
    if (fh == NULL) {
       puts("Unable to open BLU file");
@@ -196,17 +192,17 @@ CHAR *name;
       return;
    }
 
-   err = Write(fh, blu, size);
+   err = fwrite(blu, size, 1, fh);
 
    if (err == -1) {
-      Close(fh);
+      fclose(fh);
 
       puts("Error writing BLU file");
 
       return;
    }
 
-   Close(fh);
+   fclose(fh);
 
    return;
 }

@@ -11,7 +11,6 @@ set(SOURCE_FILES
     image.c
     load.c
     math.c
-    platformstub.c
     tracer.c
     write.c
 )

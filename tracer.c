@@ -5,8 +5,6 @@
 #include <SDL2/SDL.h>
 #endif // WINDOWED_UI
 
-#include "platformstub.h"
-
 #include "tracer.h"
 #include "math.h"
 #include "free.h"
@@ -82,7 +80,7 @@ CHAR **argv;
 
    size1 = sizeof(struct Polygon) * MAXPOLYS;
 
-   polys = AllocMem(size1, MEMF_CLEAR);
+   polys = calloc(1, size1);
 
    if (polys == NULL) {
 
@@ -96,10 +94,10 @@ CHAR **argv;
 
    size2 = sizeof(struct Vertex) * MAXVERTS;
 
-   verts = AllocMem(size2, MEMF_CLEAR);
+   verts = calloc(1, size2);
 
    if (verts == NULL) {
-      FreeMem(polys, size1);
+      free(polys);
 
       puts("Unable to allocate 'verts' buffer");
 
@@ -118,18 +116,18 @@ CHAR **argv;
 
    size3 = (LONG)scrw * scrh;
 
-   red = AllocMem(size3, MEMF_CLEAR);
-   grn = AllocMem(size3, MEMF_CLEAR);
-   blu = AllocMem(size3, MEMF_CLEAR);
+   red = calloc(1, size3);
+   grn = calloc(1, size3);
+   blu = calloc(1, size3);
 
    if (red == NULL || grn == NULL || blu == NULL) {
-      if (red) FreeMem(red, size3);
-      if (grn) FreeMem(grn, size3);
-      if (blu) FreeMem(blu, size3);
+      if (red) free(red);
+      if (grn) free(grn);
+      if (blu) free(blu);
 
-      FreeMem(verts, size2);
+      free(verts);
 
-      FreeMem(polys, size1);
+      free(polys);
 
       puts("Unable to allocate RGB buffers");
 
@@ -146,13 +144,13 @@ CHAR **argv;
 
    if (wp == NULL) {
 
-      FreeMem(red, size3);
-      FreeMem(grn, size3);
-      FreeMem(blu, size3);
+      free(red);
+      free(grn);
+      free(blu);
 
-      FreeMem(verts, size2);
+      free(verts);
 
-      FreeMem(polys, size1);
+      free(polys);
 
       puts("Unable to open window");
 
@@ -185,13 +183,13 @@ CHAR **argv;
     SDL_DestroyWindow(wp);
 #endif // WINDOWED_UI
 
-      FreeMem(red, size3);
-      FreeMem(grn, size3);
-      FreeMem(blu, size3);
+      free(red);
+      free(grn);
+      free(blu);
 
-      FreeMem(verts, size2);
+      free(verts);
 
-      FreeMem(polys, size1);
+      free(polys);
 
       if (err == 1) puts("DOS Error loading object");
       else
@@ -221,13 +219,13 @@ CHAR **argv;
     SDL_DestroyWindow(wp);
 #endif // WINDOWED_UI
 
-      FreeMem(red, size3);
-      FreeMem(grn, size3);
-      FreeMem(blu, size3);
+      free(red);
+      free(grn);
+      free(blu);
 
-      FreeMem(verts, size2);
+      free(verts);
 
-      FreeMem(polys, size1);
+      free(polys);
 
 #ifdef WINDOWED_UI
 
@@ -274,13 +272,13 @@ CHAR **argv;
     SDL_DestroyWindow(wp);
 #endif // WINDOWED_UI
 
-   FreeMem(red, size3);
-   FreeMem(grn, size3);
-   FreeMem(blu, size3);
+   free(red);
+   free(grn);
+   free(blu);
 
-   FreeMem(verts, size2);
+   free(verts);
 
-   FreeMem(polys, size1);
+   free(polys);
 
 #ifdef WINDOWED_UI
    SDL_Quit();

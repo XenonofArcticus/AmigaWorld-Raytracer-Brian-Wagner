@@ -2,9 +2,6 @@
 #include <string.h>
 
 #include "types.h"
-//#include "exec/memory.h"
-//#include "functions.h"
-#include "platformstub.h"
 
 #include "load.h"
 #include "tracer.h"
@@ -170,7 +167,7 @@ CHAR *file;
 
       polys[npoly].cnt = cnt;
 
-      polys[npoly].vtx = AllocMem(cnt * 2, MEMF_CLEAR);
+      polys[npoly].vtx = calloc(1, cnt * 2);
 
       if (polys[npoly].vtx == NULL) {
          fclose(fp);
