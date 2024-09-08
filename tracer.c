@@ -40,11 +40,13 @@ char **argv;
 #endif // !WINDOWED_UI
 
    int err = 0;
+   int returnStatus = 0; // exit valud from main
 #ifdef WINDOWED_UI
       if(SDL_Init(SDL_INIT_VIDEO)) // SDL_Init returns non-zero for failure
       {
       puts("Failed to SDL_Init");
-      exit(1); // exit immediately if SDL doesn't initialize
+      returnStatus = 1; // failure 
+      exit(returnStatus); // exit immediately if SDL doesn't initialize
       }
 #endif // WINDOWED_UI
 
@@ -56,7 +58,8 @@ char **argv;
 #ifdef WINDOWED_UI
       SDL_Quit();
 #endif // WINDOWED_UI
-      return 1;
+      returnStatus = 1; // failure 
+      return returnStatus;
    }
 
    /* Fetch pixel dimensions. */
@@ -70,7 +73,8 @@ char **argv;
 #ifdef WINDOWED_UI
       SDL_Quit();
 #endif // WINDOWED_UI
-      return 1;
+      returnStatus = 1; // failure 
+      return returnStatus;
    }
 
 
@@ -84,7 +88,8 @@ char **argv;
 #ifdef WINDOWED_UI
       SDL_Quit();
 #endif // WINDOWED_UI
-      return 1;
+      returnStatus = 1; // failure 
+      return returnStatus;
    }
 
    verts = calloc(MAXVERTS, sizeof(struct Vertex));
@@ -97,7 +102,8 @@ char **argv;
 #ifdef WINDOWED_UI
       SDL_Quit();
 #endif // WINDOWED_UI
-      return 1;
+      returnStatus = 1; // failure 
+      return returnStatus;
    }
 
    /* Assign screen dimensions based on screen mode. */
@@ -125,7 +131,8 @@ char **argv;
 #ifdef WINDOWED_UI
       SDL_Quit();
 #endif // WINDOWED_UI
-      return 1;
+      returnStatus = 1; // failure 
+      return returnStatus;
    }
 
 #ifdef WINDOWED_UI
@@ -148,7 +155,8 @@ char **argv;
 #ifdef WINDOWED_UI
       SDL_Quit();
 #endif // WINDOWED_UI
-      return 1;
+      returnStatus = 1; // failure 
+      return returnStatus;
    }
 #endif // WINDOWED_UI
 
@@ -195,7 +203,8 @@ char **argv;
 #ifdef WINDOWED_UI
       SDL_Quit();
 #endif // WINDOWED_UI
-      return 1;
+      returnStatus = 1; // failure 
+      return returnStatus;
    }
 
    /* Load viewing options. */
@@ -228,7 +237,8 @@ char **argv;
       SDL_Quit();
 #endif // WINDOWED_UI
 
-      return 1;
+      returnStatus = 1; // failure 
+      return returnStatus;
    }
 
    /* start timing computation */
@@ -275,6 +285,6 @@ char **argv;
    SDL_Quit();
 #endif // WINDOWED_UI
 
-   return 0;
+   return returnStatus;
 }
 
