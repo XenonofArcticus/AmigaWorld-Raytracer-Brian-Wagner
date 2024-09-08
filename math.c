@@ -1,5 +1,4 @@
 #include <math.h> // system math.h
-#include "types.h"
 
 #include "tracer.h"
 #include "math.h" // project's math.h
@@ -10,21 +9,21 @@ extern struct Vertex *verts;
 
 extern struct ViewOpts vopts;
 
-extern SHORT npoly, nvert;
+extern short npoly, nvert;
 
-extern SHORT scrw, scrh;
+extern short scrw, scrh;
 
-extern FLOAT gnx, gny, gnz;
+extern float gnx, gny, gnz;
 
-// extern FLOAT sqrt();// defined in system math.h
+// extern float sqrt();// defined in system math.h
 
 /* Calculate a unit vector by dividing each component by the their */
 /* combined length. */
 
-VOID unitvector(x, y, z)
-FLOAT *x, *y, *z;
+void unitvector(x, y, z)
+float *x, *y, *z;
 {
-   FLOAT len;
+   float len;
 
    len = sqrt(*x * *x + *y * *y + *z * *z);
 
@@ -40,13 +39,13 @@ FLOAT *x, *y, *z;
 /* Transform object vertices and light source position to the view plane */
 /* coordinate system.  This is done to greatly simplify calculations. */
 
-VOID transform()
+void transform()
 {
-   LONG i;
-   FLOAT nx, ny, nz, s;
-   FLOAT sx, cx, sy, cy;
-   FLOAT vx, vy, vz;
-   FLOAT tx, ty, tz;
+   long i;
+   float nx, ny, nz, s;
+   float sx, cx, sy, cy;
+   float vx, vy, vz;
+   float tx, ty, tz;
 
    nx = vopts.lpx - vopts.cax;
    ny = vopts.lpy - vopts.cay;
@@ -142,10 +141,10 @@ VOID transform()
 /* Calculate surface normals for the polygons by using the vector cross */
 /* product operation. */
 
-VOID calcnormals()
+void calcnormals()
 {
-   LONG i, oi, ai, bi;
-   FLOAT ax, ay, az, bx, by, bz;
+   long i, oi, ai, bi;
+   float ax, ay, az, bx, by, bz;
 
    for (i = 0; i < npoly; i++) {
       oi = polys[i].vtx[0];
@@ -178,16 +177,16 @@ VOID calcnormals()
 
 /* Check to see if a ray and triangle intersect. */
 
-SHORT trianglehit(r, t, i)
+short trianglehit(r, t, i)
 struct Ray *r;
 struct Triangle *t;
 struct Intersection *i;
 {
-   FLOAT px, py, pz, n, d, v;
-   FLOAT ix, iy, iz, x, y;
-   FLOAT x21, y21, z21, x31, y31, z31;
-   FLOAT nxx, nxy, nxz, nyx, nyy, nyz;
-   FLOAT dxy, dyx, nx, ny, nz;
+   float px, py, pz, n, d, v;
+   float ix, iy, iz, x, y;
+   float x21, y21, z21, x31, y31, z31;
+   float nxx, nxy, nxz, nyx, nyy, nyz;
+   float dxy, dyx, nx, ny, nz;
 
    nx = t->nx;
    ny = t->ny;
@@ -260,14 +259,14 @@ struct Intersection *i;
 
 /* Check to see if a ray and polygon intersect. */
 
-SHORT polygonhit(r, p, i)
+short polygonhit(r, p, i)
 struct Ray *r;
 struct Polygon *p;
 struct Intersection *i;
 {
    struct Triangle t;
 
-   SHORT nt, l, v, hit;
+   short nt, l, v, hit;
 
    nt = p->cnt - 2;
 
@@ -308,12 +307,12 @@ struct Intersection *i;
 
 /* Check to see if a ray hits the ground. */
 
-SHORT groundhit(r, i)
+short groundhit(r, i)
 struct Ray *r;
 struct Intersection *i;
 {
-   FLOAT px, py, pz;
-   FLOAT n, d, v;
+   float px, py, pz;
+   float n, d, v;
 
    d = r->dx * gnx + r->dy * gny + r->dz * gnz;
 
@@ -343,15 +342,15 @@ struct Intersection *i;
 /* Check to see if ANY polygons lie between a surface point and */
 /* the light source. */
 
-SHORT shadowchk(i)
+short shadowchk(i)
 struct Intersection *i;
 {
    struct Ray ray;
 
    struct Intersection si;
 
-   SHORT l;
-   FLOAT dx, dy, dz;
+   short l;
+   float dx, dy, dz;
 
    dx = vopts.lsx - i->ix;
    dy = vopts.lsy - i->iy;
@@ -380,13 +379,13 @@ struct Intersection *i;
 
 /* Calculate shade of color for a given surface point. */
 
-VOID shadepoint(i, c)
+void shadepoint(i, c)
 struct Intersection *i;
 struct Color *c;
 {
    struct Polygon *p;
 
-   FLOAT lx, ly, lz, dp;
+   float lx, ly, lz, dp;
 
    p = i->poly;
 
@@ -411,13 +410,13 @@ struct Color *c;
 
 /* Calculate a sky color based on ray direction. */
 
-VOID shadesky(r, c)
+void shadesky(r, c)
 struct Ray *r;
 struct Color *c;
 {
-   SHORT zr, zg, zb;
-   SHORT hr, hg, hb;
-   FLOAT dp;
+   short zr, zg, zb;
+   short hr, hg, hb;
+   float dp;
 
    dp = r->dx * gnx + r->dy * gny + r->dz * gnz;
 

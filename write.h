@@ -1,3 +1,1 @@
-#include "types.h"
-
-VOID saveImageToFile(CHAR *name);
+void saveImageToFile(char *name);

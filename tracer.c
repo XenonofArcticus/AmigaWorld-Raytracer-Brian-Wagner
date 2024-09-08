@@ -1,6 +1,5 @@
 #include <stdlib.h>
 
-#include "types.h"
 #ifdef WINDOWED_UI
 #include <SDL2/SDL.h>
 #endif // WINDOWED_UI
@@ -20,13 +19,13 @@ struct Polygon *polys;
 
 struct Vertex *verts;
 
-UBYTE *red, *grn, *blu;
+unsigned char *red, *grn, *blu;
 
-SHORT npoly, nvert;
+short npoly, nvert;
 
-SHORT widtharg, heightarg, scrw, scrh;
+short widtharg, heightarg, scrw, scrh;
 
-FLOAT gnx, gny, gnz;
+float gnx, gny, gnz;
 
 #ifdef WINDOWED_UI
 int SDL_main(int argc, char *argv[])
@@ -34,14 +33,13 @@ int SDL_main(int argc, char *argv[])
     SDL_Renderer *rp;
     SDL_Window *wp;
 #else // !WINDOWED_UI
-VOID main(argc, argv)
-SHORT argc;
-CHAR **argv;
+void main(argc, argv)
+short argc;
+char **argv;
 {
 #endif // !WINDOWED_UI
 
-   LONG size1, size2, size3,
-     err;
+   long err;
 #ifdef WINDOWED_UI
       if(SDL_Init(SDL_INIT_VIDEO)) // SDL_Init returns non-zero for failure
       {
@@ -77,10 +75,7 @@ CHAR **argv;
 
 
    /* Allocate object storage buffers. */
-
-   size1 = sizeof(struct Polygon) * MAXPOLYS;
-
-   polys = calloc(1, size1);
+   polys = calloc(MAXPOLYS, sizeof(struct Polygon));
 
    if (polys == NULL) {
 
@@ -92,9 +87,7 @@ CHAR **argv;
       return 1;
    }
 
-   size2 = sizeof(struct Vertex) * MAXVERTS;
-
-   verts = calloc(1, size2);
+   verts = calloc(MAXVERTS, sizeof(struct Vertex));
 
    if (verts == NULL) {
       free(polys);
@@ -114,11 +107,9 @@ CHAR **argv;
 
    /* Allocate RGB buffers. */
 
-   size3 = (LONG)scrw * scrh;
-
-   red = calloc(1, size3);
-   grn = calloc(1, size3);
-   blu = calloc(1, size3);
+   red = calloc(1, (long)(scrw * scrh));
+   grn = calloc(1, (long)(scrw * scrh));
+   blu = calloc(1, (long)(scrw * scrh));
 
    if (red == NULL || grn == NULL || blu == NULL) {
       if (red) free(red);

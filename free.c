@@ -1,18 +1,18 @@
-#include "types.h"
+#include <stddef.h>
 
 #include "tracer.h"
 #include "free.h"
 
 extern struct Polygon *polys;
 
-extern SHORT npoly;
+extern short npoly;
 
 /* Free all polygon vertex arrays which are allocated during the object */
 /* load function. */
 
-VOID freevtxarrays()
+void freevtxarrays()
 {
-   LONG i, size;
+   long i, size;
 
    for (i = 0; i < npoly; i++) {
       size = polys[i].cnt * 2;

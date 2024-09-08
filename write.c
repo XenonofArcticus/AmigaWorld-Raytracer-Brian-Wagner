@@ -1,5 +1,4 @@
 #include <string.h>
-#include "types.h"
 
 #include "tracer.h"
 
@@ -7,14 +6,14 @@
 #include <spng.h>
 #endif // OUTPUT_PNG
 
-extern UBYTE *red, *grn, *blu;
+extern unsigned char *red, *grn, *blu;
 
-extern SHORT scrw, scrh;
+extern short scrw, scrh;
 
 /* Write out the RED, GRN, BLU (RGB) buffers. */
 
-VOID saveImageToFile(name)
-CHAR *name;
+void saveImageToFile(name)
+char *name;
 {
    #ifdef OUTPUT_PNG
    writePNG(name);
@@ -24,10 +23,10 @@ CHAR *name;
 }
 
 #ifdef OUTPUT_PNG
-int writePNG(CHAR *name)
+int writePNG(char *name)
 {
-   CHAR file[500];
-   LONG err;
+   char file[500];
+   long err;
    FILE *fh;
    unsigned char *image;
    size_t length;
@@ -125,14 +124,14 @@ encode_error:
     }
 #endif // OUTPUT_PNG
 
-VOID writeRGB(name)
-CHAR *name;
+void writeRGB(name)
+char *name;
 {
-   CHAR file[500];
-   LONG size, err;
+   char file[500];
+   long size, err;
    FILE *fh;
 
-   size = (LONG)scrw * scrh;
+   size = (long)scrw * scrh;
 
    strcpy(file, name);
 

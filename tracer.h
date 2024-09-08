@@ -7,46 +7,46 @@
 #define HUGE 1.0e+12
 
 struct Polygon {
-   SHORT cnt;
-   SHORT *vtx;
-   FLOAT nx, ny, nz;
-   SHORT r, g, b;
+   short cnt;
+   short *vtx;
+   float nx, ny, nz;
+   short r, g, b;
 };
 
 struct Vertex {
-   FLOAT x, y, z;
+   float x, y, z;
 };
 
 struct Ray {
-   FLOAT ox, oy, oz;
-   FLOAT dx, dy, dz;
+   float ox, oy, oz;
+   float dx, dy, dz;
 };
 
 struct Triangle {
-   FLOAT x1, y1, z1;
-   FLOAT x2, y2, z2;
-   FLOAT x3, y3, z3;
-   FLOAT nx, ny, nz;
+   float x1, y1, z1;
+   float x2, y2, z2;
+   float x3, y3, z3;
+   float nx, ny, nz;
 };
 
 struct Intersection {
-   FLOAT ix, iy, iz;
-   FLOAT dist;
-   VOID *poly;
+   float ix, iy, iz;
+   float dist;
+   void *poly;
 };
 
 struct Color {
-   SHORT r, g, b;
+   short r, g, b;
 };
 
 struct ViewOpts {
-   FLOAT cax, cay, caz;
-   FLOAT lpx, lpy, lpz;
-   FLOAT scl;
-   FLOAT lsx, lsy, lsz;
-   FLOAT vpx, vpy;
-   FLOAT wdy;
-   FLOAT cpd;
+   float cax, cay, caz;
+   float lpx, lpy, lpz;
+   float scl;
+   float lsx, lsy, lsz;
+   float vpx, vpy;
+   float wdy;
+   float cpd;
 };
 
 #endif // INCLUDE_POLYGON_H

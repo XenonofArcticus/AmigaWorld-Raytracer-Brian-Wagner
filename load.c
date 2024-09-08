@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-
-#include "types.h"
+#include <stdlib.h>
 
 #include "load.h"
 #include "tracer.h"
@@ -12,12 +11,12 @@ extern struct Vertex *verts;
 
 extern struct ViewOpts vopts;
 
-extern SHORT npoly, nvert;
+extern short npoly, nvert;
 
 /* Convert GEO color code to equivalent RGB color values. */
 
-VOID convertcol(col, poly)
-LONG col;
+void convertcol(col, poly)
+long col;
 struct Polygon *poly;
 {
    switch(col) {
@@ -98,13 +97,13 @@ struct Polygon *poly;
 /* arrays are allocated during the load since the number of vertices per */
 /* polygon can vary greatly. */
 
-SHORT loadobject(file)
-CHAR *file;
+short loadobject(file)
+char *file;
 {
    FILE *fp;
 
-   CHAR id[5];
-   LONG obid, i, cnt, col;
+   char id[5];
+   long obid, i, cnt, col;
 
    fp = fopen(file, "r");
 
@@ -223,8 +222,8 @@ CHAR *file;
 
 /* Load viewing options and store in the global 'vopts' structure. */
 
-SHORT loadvopts(file)
-CHAR *file;
+short loadvopts(file)
+char *file;
 {
    FILE *fp;
 

@@ -1,4 +1,3 @@
-#include "types.h"
 #ifdef WINDOWED_UI
 #include <SDL2/SDL.h>
 #endif // WINDOWED_UI
@@ -13,21 +12,21 @@ extern struct Polygon *polys;
 
 extern struct ViewOpts vopts;
 
-extern UBYTE *red, *grn, *blu;
+extern unsigned char *red, *grn, *blu;
 
-extern SHORT npoly;
+extern short npoly;
 
-extern SHORT scrw, scrh;
+extern short scrw, scrh;
 
 /* Store color in the RED, GRN, BLU (RGB) buffers. */
 
-VOID storeRGB(c, x, y)
+void storeRGB(c, x, y)
 struct Color *c;
-SHORT x, y;
+short x, y;
 {
-   LONG pos;
+   long pos;
 
-   pos = (LONG)y * scrw + x;
+   pos = (long)y * scrw + x;
 
    red[pos] = c->r;
    grn[pos] = c->g;
@@ -38,7 +37,7 @@ SHORT x, y;
 
 /* Send a ray through each pixel of final image. */
 
-VOID traceimage(
+void traceimage(
 #ifdef WINDOWED_UI
    rp
 #endif // WINDOWED_UI
@@ -56,11 +55,11 @@ SDL_Event event;
 
    struct Color color;
 
-   SHORT i, j, k, l;
-   SHORT actw, acth;
-   FLOAT vpx, vpy;
-   FLOAT px, py, ar;
-   FLOAT dx, dy, dz;
+   short i, j, k, l;
+   short actw, acth;
+   float vpx, vpy;
+   float px, py, ar;
+   float dx, dy, dz;
 
    /* Calculate aspect ratio value. */
 
@@ -80,10 +79,10 @@ SDL_Event event;
 #endif // WINDOWED_UI
    for (i = 0; i < actw; i++) {
       for (j = 0; j < acth; j++) {
-         px = (FLOAT)i + 0.5;
+         px = (float)i + 0.5;
          px = vpx * ((px / actw) - 0.5);
 
-         py = (FLOAT)(acth - 1 - j) - 0.5;
+         py = (float)(acth - 1 - j) - 0.5;
          py = vpy * ((py / acth) - 0.5);
 
          ray.ox = 0.0;
