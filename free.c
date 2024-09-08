@@ -12,7 +12,7 @@ extern int npoly;
 
 void freevtxarrays()
 {
-   long i;
+   int i;
 
    for (i = 0; i < npoly; i++) {
       if (polys[i].vtx == NULL) continue;

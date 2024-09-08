@@ -16,7 +16,7 @@ extern int npoly, nvert;
 /* Convert GEO color code to equivalent RGB color values. */
 
 void convertcol(col, poly)
-long col;
+int col;
 struct Polygon *poly;
 {
    switch(col) {
@@ -103,7 +103,7 @@ char *file;
    FILE *fp;
 
    char id[5];
-   long obid, i, cnt, col;
+   int obid, i, cnt, col;
 
    fp = fopen(file, "r");
 
@@ -166,7 +166,7 @@ char *file;
 
       polys[npoly].cnt = cnt;
 
-      polys[npoly].vtx = calloc(1, cnt * sizeof(long));
+      polys[npoly].vtx = calloc(1, cnt * sizeof(int));
 
       if (polys[npoly].vtx == NULL) {
          fclose(fp);

@@ -15,11 +15,11 @@
 
 struct ViewOpts vopts;
 
-struct Polygon *polys;
+struct Polygon *polys = NULL;
 
-struct Vertex *verts;
+struct Vertex *verts = NULL;
 
-unsigned char *red, *grn, *blu;
+unsigned char *red = NULL, *grn = NULL, *blu = NULL;
 
 int npoly, nvert;
 
@@ -30,8 +30,8 @@ float gnx, gny, gnz;
 #ifdef WINDOWED_UI
 int SDL_main(int argc, char *argv[])
 {
-    SDL_Renderer *rp;
-    SDL_Window *wp;
+    SDL_Renderer *rp = NULL;
+    SDL_Window *wp = NULL;
 #else // !WINDOWED_UI
 void main(argc, argv)
 int argc;
@@ -39,7 +39,7 @@ char **argv;
 {
 #endif // !WINDOWED_UI
 
-   long err;
+   int err = 0;
 #ifdef WINDOWED_UI
       if(SDL_Init(SDL_INIT_VIDEO)) // SDL_Init returns non-zero for failure
       {

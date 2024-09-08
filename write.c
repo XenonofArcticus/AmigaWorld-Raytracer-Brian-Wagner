@@ -26,7 +26,7 @@ char *name;
 int writePNG(char *name)
 {
    char file[500];
-   long err;
+   int err;
    FILE *fh;
    unsigned char *image;
    size_t length;
@@ -68,8 +68,8 @@ int writePNG(char *name)
     {
 
     // perform interleaving
-    for(unsigned long int outbyte = 0, yrow = 0; yrow < scrh; yrow++)
-      for(unsigned long int xcol = 0; xcol < scrw; xcol++)
+    for(unsigned int outbyte = 0, yrow = 0; yrow < scrh; yrow++)
+      for(unsigned int xcol = 0; xcol < scrw; xcol++)
       {
          size_t imageoffset = yrow * scrw + xcol;
          image[outbyte++] = red[imageoffset];
@@ -128,10 +128,10 @@ void writeRGB(name)
 char *name;
 {
    char file[500];
-   long size, err;
+   int size, err;
    FILE *fh;
 
-   size = (long)scrw * scrh;
+   size = scrw * scrh;
 
    strcpy(file, name);
 

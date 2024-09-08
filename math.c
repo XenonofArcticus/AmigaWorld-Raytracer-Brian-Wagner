@@ -41,7 +41,7 @@ float *x, *y, *z;
 
 void transform()
 {
-   long i;
+   int i;
    float nx, ny, nz, s;
    float sx, cx, sy, cy;
    float vx, vy, vz;
@@ -143,7 +143,7 @@ void transform()
 
 void calcnormals()
 {
-   long i, oi, ai, bi;
+   int i, oi, ai, bi;
    float ax, ay, az, bx, by, bz;
 
    for (i = 0; i < npoly; i++) {

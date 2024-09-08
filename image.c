@@ -24,9 +24,9 @@ void storeRGB(c, x, y)
 struct Color *c;
 int x, y;
 {
-   long pos;
+   int pos;
 
-   pos = (long)y * scrw + x;
+   pos = y * scrw + x;
 
    red[pos] = c->r;
    grn[pos] = c->g;
