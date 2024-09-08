@@ -64,7 +64,7 @@ char **argv;
    widtharg = atoi(argv[3]);
    heightarg = atoi(argv[4]);
 
-   if (widtharg <= 0 || heightarg < 0) {
+   if (widtharg <= 0 || heightarg <= 0) {
       puts("Illegal dimensions specified");
 
 #ifdef WINDOWED_UI
@@ -107,9 +107,9 @@ char **argv;
 
    /* Allocate RGB buffers. */
 
-   red = calloc(1, (long)(scrw * scrh));
-   grn = calloc(1, (long)(scrw * scrh));
-   blu = calloc(1, (long)(scrw * scrh));
+   red = calloc(1, scrw * scrh);
+   grn = calloc(1, scrw * scrh);
+   blu = calloc(1, scrw * scrh);
 
    if (red == NULL || grn == NULL || blu == NULL) {
       if (red) free(red);
@@ -182,7 +182,7 @@ char **argv;
 
       free(polys);
 
-      if (err == 1) puts("DOS Error loading object");
+      if (err == 1) puts("Error loading object");
       else
       if (err == 2) puts("Not a valid GEO object file");
       else
