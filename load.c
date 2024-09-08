@@ -11,7 +11,7 @@ extern struct Vertex *verts;
 
 extern struct ViewOpts vopts;
 
-extern short npoly, nvert;
+extern int npoly, nvert;
 
 /* Convert GEO color code to equivalent RGB color values. */
 
@@ -97,7 +97,7 @@ struct Polygon *poly;
 /* arrays are allocated during the load since the number of vertices per */
 /* polygon can vary greatly. */
 
-short loadobject(file)
+int loadobject(file)
 char *file;
 {
    FILE *fp;
@@ -127,7 +127,7 @@ char *file;
       return(2);
    }
 
-   fscanf(fp, "%hd\n", &nvert);
+   fscanf(fp, "%d\n", &nvert);
 
    if (ferror(fp)) {
       fclose(fp);
@@ -166,7 +166,7 @@ char *file;
 
       polys[npoly].cnt = cnt;
 
-      polys[npoly].vtx = calloc(1, cnt * 2);
+      polys[npoly].vtx = calloc(1, cnt * sizeof(long));
 
       if (polys[npoly].vtx == NULL) {
          fclose(fp);
@@ -175,7 +175,7 @@ char *file;
       }
 
       for (i = 0; i < cnt; i++) {
-         fscanf(fp, "%hd ", &polys[npoly].vtx[i]);
+         fscanf(fp, "%d ", &polys[npoly].vtx[i]);
 
          if (ferror(fp)) {
             fclose(fp);
@@ -222,7 +222,7 @@ char *file;
 
 /* Load viewing options and store in the global 'vopts' structure. */
 
-short loadvopts(file)
+int loadvopts(file)
 char *file;
 {
    FILE *fp;

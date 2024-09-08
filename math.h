@@ -6,9 +6,9 @@ extern struct Vertex *verts;
 
 extern struct ViewOpts vopts;
 
-extern short npoly, nvert;
+extern int npoly, nvert;
 
-extern short scrw, scrh;
+extern int scrw, scrh;
 
 extern float gnx, gny, gnz;
 
@@ -31,20 +31,20 @@ void calcnormals();
 
 /* Check to see if a ray and triangle intersect. */
 
-short trianglehit(struct Ray *r, struct Triangle *t, struct Intersection *i);
+int trianglehit(struct Ray *r, struct Triangle *t, struct Intersection *i);
 
 /* Check to see if a ray and polygon intersect. */
 
-short polygonhit(struct Ray *r, struct Polygon *p, struct Intersection *i);
+int polygonhit(struct Ray *r, struct Polygon *p, struct Intersection *i);
 
 /* Check to see if a ray hits the ground. */
 
-short groundhit(struct Ray *r, struct Intersection *i);
+int groundhit(struct Ray *r, struct Intersection *i);
 
 /* Check to see if ANY polygons lie between a surface point and */
 /* the light source. */
 
-short shadowchk(struct Intersection *i);
+int shadowchk(struct Intersection *i);
 
 /* Calculate shade of color for a given surface point. */
 

@@ -14,15 +14,15 @@ extern struct ViewOpts vopts;
 
 extern unsigned char *red, *grn, *blu;
 
-extern short npoly;
+extern int npoly;
 
-extern short scrw, scrh;
+extern int scrw, scrh;
 
 /* Store color in the RED, GRN, BLU (RGB) buffers. */
 
 void storeRGB(c, x, y)
 struct Color *c;
-short x, y;
+int x, y;
 {
    long pos;
 
@@ -55,8 +55,8 @@ SDL_Event event;
 
    struct Color color;
 
-   short i, j, k, l;
-   short actw, acth;
+   int i, j, k, l;
+   int actw, acth;
    float vpx, vpy;
    float px, py, ar;
    float dx, dy, dz;

@@ -4,7 +4,7 @@
 
 /* Store color in the RED, GRN, BLU (RGB) buffers. */
 
-void storeRGB(struct Color *c, short x, short y);
+void storeRGB(struct Color *c, int x, int y);
 
 void traceimage(
 #ifdef WINDOWED_UI

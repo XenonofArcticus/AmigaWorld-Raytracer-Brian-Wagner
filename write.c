@@ -8,7 +8,7 @@
 
 extern unsigned char *red, *grn, *blu;
 
-extern short scrw, scrh;
+extern int scrw, scrh;
 
 /* Write out the RED, GRN, BLU (RGB) buffers. */
 

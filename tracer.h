@@ -7,10 +7,10 @@
 #define HUGE 1.0e+12
 
 struct Polygon {
-   short cnt;
-   short *vtx;
+   int cnt;
+   int *vtx;
    float nx, ny, nz;
-   short r, g, b;
+   int r, g, b;
 };
 
 struct Vertex {
@@ -36,7 +36,7 @@ struct Intersection {
 };
 
 struct Color {
-   short r, g, b;
+   int r, g, b;
 };
 
 struct ViewOpts {

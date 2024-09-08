@@ -21,9 +21,9 @@ struct Vertex *verts;
 
 unsigned char *red, *grn, *blu;
 
-short npoly, nvert;
+int npoly, nvert;
 
-short widtharg, heightarg, scrw, scrh;
+int widtharg, heightarg, scrw, scrh;
 
 float gnx, gny, gnz;
 
@@ -34,7 +34,7 @@ int SDL_main(int argc, char *argv[])
     SDL_Window *wp;
 #else // !WINDOWED_UI
 void main(argc, argv)
-short argc;
+int argc;
 char **argv;
 {
 #endif // !WINDOWED_UI
