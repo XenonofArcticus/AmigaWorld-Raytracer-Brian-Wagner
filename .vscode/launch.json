@@ -10,7 +10,7 @@
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/build/tracer.exe",
-            "args": ["pyrs", "pyrsopts", "640", "400"],
+            "args": ["pyrs", "pyrsopts_start", "pyrsopts", "640", "400", "5"],
             "symbolSearchPath": "",
             "console": true,
             "logging": {

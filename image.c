@@ -156,3 +156,30 @@ SDL_Event event;
    return;
 }
 
+void interpolatevopts(struct ViewOpts *dest, struct ViewOpts *start, struct ViewOpts *end, float stepfraction)
+{
+/*
+// not all params make sense to interpolate, so we'll only do what makes sense
+// [camera] cax, cay, caz, [lookposition] lpx, lpy, lpz, [lightsource] lsx, lsy, lsz, [groundpos] wdy, [center of projection] cpd
+*/
+   // CAmera position
+   dest->cax = start->cax + ((end->cax - start->cax) * stepfraction);
+   dest->cay = start->cay + ((end->cay - start->cay) * stepfraction);
+   dest->caz = start->caz + ((end->caz - start->caz) * stepfraction);
+
+   // Look Position
+   dest->lpx = start->lpx + ((end->lpx - start->lpx) * stepfraction);
+   dest->lpy = start->lpy + ((end->lpy - start->lpy) * stepfraction);
+   dest->lpz = start->lpz + ((end->lpz - start->lpz) * stepfraction);
+
+   // Light Source
+   dest->lsx = start->lsx + ((end->lsx - start->lsx) * stepfraction);
+   dest->lsy = start->lsy + ((end->lsy - start->lsy) * stepfraction);
+   dest->lsz = start->lsz + ((end->lsz - start->lsz) * stepfraction);
+
+   // WorlD
+   dest->wdy = start->wdy + ((end->wdy - start->wdy) * stepfraction);
+
+   // Center of Projection
+   dest->cpd = start->cpd + ((end->cpd - start->cpd) * stepfraction);
+}

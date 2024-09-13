@@ -7,8 +7,6 @@
 
 extern struct Polygon *polys;
 
-extern struct Vertex *verts;
-
 extern struct ViewOpts vopts;
 
 extern int npoly, nvert;
@@ -97,8 +95,7 @@ struct Polygon *poly;
 /* arrays are allocated during the load since the number of vertices per */
 /* polygon can vary greatly. */
 
-int loadobject(file)
-char *file;
+int loadobject(char *file, struct Vertex *loadverts)
 {
    FILE *fp;
 
@@ -136,7 +133,7 @@ char *file;
    }
 
    for (i = 0; i < nvert; i++) {
-      fscanf(fp, "%f %f %f\n", &verts[i].x, &verts[i].y, &verts[i].z);
+      fscanf(fp, "%f %f %f\n", &loadverts[i].x, &loadverts[i].y, &loadverts[i].z);
 
       if (ferror(fp)) {
          fclose(fp);
@@ -144,7 +141,7 @@ char *file;
          return(1);
       }
 
-      verts[i].z *= -1;
+      loadverts[i].z *= -1;
 
       if (i < MAXVERTS - 1) continue;
 
@@ -222,8 +219,7 @@ char *file;
 
 /* Load viewing options and store in the global 'vopts' structure. */
 
-int loadvopts(file)
-char *file;
+int loadvopts(char *file, struct ViewOpts *destvopts)
 {
    FILE *fp;
 
@@ -231,7 +227,7 @@ char *file;
 
    if (fp == NULL) return(1);
 
-   fscanf(fp, "%f %f %f\n", &vopts.cax, &vopts.cay, &vopts.caz);
+   fscanf(fp, "%f %f %f\n", &destvopts->cax, &destvopts->cay, &destvopts->caz);
 
    if (ferror(fp)) {
       fclose(fp);
@@ -239,7 +235,7 @@ char *file;
       return(1);
    }
 
-   fscanf(fp, "%f %f %f\n", &vopts.lpx, &vopts.lpy, &vopts.lpz);
+   fscanf(fp, "%f %f %f\n", &destvopts->lpx, &destvopts->lpy, &destvopts->lpz);
 
    if (ferror(fp)) {
       fclose(fp);
@@ -247,7 +243,7 @@ char *file;
       return(1);
    }
 
-   fscanf(fp, "%f\n", &vopts.scl);
+   fscanf(fp, "%f\n", &destvopts->scl);
 
    if (ferror(fp)) {
       fclose(fp);
@@ -255,7 +251,7 @@ char *file;
       return(1);
    }
 
-   fscanf(fp, "%f %f %f\n", &vopts.lsx, &vopts.lsy, &vopts.lsz);
+   fscanf(fp, "%f %f %f\n", &destvopts->lsx, &destvopts->lsy, &destvopts->lsz);
 
    if (ferror(fp)) {
       fclose(fp);
@@ -263,7 +259,7 @@ char *file;
       return(1);
    }
 
-   fscanf(fp, "%f %f\n", &vopts.vpx, &vopts.vpy);
+   fscanf(fp, "%f %f\n", &destvopts->vpx, &destvopts->vpy);
 
    if (ferror(fp)) {
       fclose(fp);
@@ -271,7 +267,7 @@ char *file;
       return(1);
    }
 
-   fscanf(fp, "%f\n", &vopts.wdy);
+   fscanf(fp, "%f\n", &destvopts->wdy);
 
    if (ferror(fp)) {
       fclose(fp);
@@ -279,7 +275,7 @@ char *file;
       return(1);
    }
 
-   fscanf(fp, "%f\n", &vopts.cpd);
+   fscanf(fp, "%f\n", &destvopts->cpd);
 
    if (ferror(fp)) {
       fclose(fp);

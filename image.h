@@ -11,3 +11,5 @@ void traceimage(
     SDL_Renderer *rp
 #endif // WINDOWED_UI
     );
+
+void interpolatevopts(struct ViewOpts *dest, struct ViewOpts *start, struct ViewOpts *end, float stepfraction);

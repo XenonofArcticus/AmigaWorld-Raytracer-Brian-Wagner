@@ -12,19 +12,22 @@
 #include "write.h"
 #include <time.h>
 
-struct ViewOpts vopts;
+struct ViewOpts vopts, vopts_start, vopts_end; // vopts is the current vopts
 
 struct Polygon *polys = NULL;
 
 struct Vertex *verts = NULL;
+struct Vertex *cleanverts = NULL;
 
 unsigned char *red = NULL, *grn = NULL, *blu = NULL;
 
 int npoly, nvert;
 
-int widtharg, heightarg, scrw, scrh;
+int widtharg = 0, heightarg = 0, scrw = 0, scrh = 0, numframes = 0;
 
 float gnx, gny, gnz;
+
+float timestepfrac = 0.0f, currenttimestep = 0.0f;
 
 #ifdef WINDOWED_UI
 int SDL_main(int argc, char *argv[])
@@ -54,20 +57,21 @@ char **argv;
 #endif // WINDOWED_UI
       { // this becomes an else if WINDOWED_UI is defined, otherwise it's an innocuous context push
             /* Check for correct number of arguments. */
-            if (argc != 5)
+            if (argc != 7)
             {
-                  puts("Usage: tracer objectfile viewoptsfile width height");
+                  puts("Usage: tracer objectfile startviewoptsfile endviewoptsfile width height frames");
                   returnStatus = 1; // failure 
             }
             else // continue initializing pixel dimensions
             {
-                  /* Fetch pixel dimensions. */
-                  widtharg = atoi(argv[3]);
-                  heightarg = atoi(argv[4]);
+                  /* Fetch pixel dimensions and frames. */
+                  widtharg = atoi(argv[4]);
+                  heightarg = atoi(argv[5]);
+                  numframes = atoi(argv[6]);
 
-                  if (widtharg <= 0 || heightarg <= 0)
+                  if (widtharg <= 0 || heightarg <= 0 || numframes <= 0)
                   {
-                        puts("Illegal dimensions specified");
+                        puts("Illegal dimensions or frames specified");
                         returnStatus = 1; // failure 
                   }
                   else // continue initializing polys
@@ -83,8 +87,9 @@ char **argv;
                         else // continue initializing verts
                         {
                               verts = calloc(MAXVERTS, sizeof(struct Vertex));
+                              cleanverts = calloc(MAXVERTS, sizeof(struct Vertex));
 
-                              if (verts == NULL)
+                              if (verts == NULL || cleanverts == NULL)
                               {
                                     puts("Unable to allocate 'verts' buffer");
                                     returnStatus = 1; // failure
@@ -94,6 +99,8 @@ char **argv;
                                     /* Assign screen dimensions */
                                     scrw = widtharg;
                                     scrh = heightarg;
+                                    // compute how much from start to end should we step on each frame increment
+                                    timestepfrac = 1.0f / numframes;
 
                                     /* Allocate RGB buffers. */
                                     red = calloc(1, scrw * scrh);
@@ -117,7 +124,7 @@ char **argv;
                                           #endif // WINDOWED_UI
                                           { // continue with initialization by loading object
                                                 /* Load object to be displayed. */
-                                                if(err = loadobject(argv[1])) // err is non-zero for failure
+                                                if(err = loadobject(argv[1], cleanverts)) // err is non-zero for failure
                                                 {
                                                       if (err == 1) puts("Error loading object");
                                                       else
@@ -133,13 +140,18 @@ char **argv;
                                                 else
                                                 { // continue with initializing Loading viewing options
                                                       /* Load viewing options. */
-                                                      if(err = loadvopts(argv[2]))
+                                                      err  = loadvopts(argv[2], &vopts_start); // start vopts
+                                                      err += loadvopts(argv[3], &vopts_end); // end vopts
+                                                      if(err) // either vopts load failing will trigger this
                                                       {
-                                                            puts("Unable to load viewing options file");
+                                                            puts("Unable to load viewing options files");
                                                             returnStatus = 1; // failure 
                                                       }
                                                       else // continue with rendering
                                                       {
+                                                            // initialize the current vopts from the start vopts
+                                                            memcpy(&vopts, &vopts_start, sizeof(struct ViewOpts));
+
                                                             /* start timing computation */
                                                             clock_t start_t, end_t;
                                                             double total_t;
@@ -150,6 +162,12 @@ char **argv;
                                                             gny = 1.0;
                                                             gnz = 0.0;
 
+                                                            for(int currentframe = 0; currentframe < numframes; currentframe++)
+                                                            {
+                                                            // refresh clean copy of verts from cleanverts
+                                                            memcpy(verts, cleanverts, (MAXVERTS * sizeof(struct Vertex)));
+                                                            interpolatevopts(&vopts, &vopts_start, &vopts_end, currenttimestep);
+
                                                             /* Call each function in the display process. */
                                                             transform();
                                                             calcnormals();
@@ -158,12 +176,23 @@ char **argv;
                                                                   rp
                                                             #endif / WINDOWED_UI
                                                                   );
+                                                            
+                                                            // save frames during animation 
+                                                            if(numframes > 1)
+                                                                  {
+                                                                  char framefilename[255]; // poor practice making this fixed size...
+                                                                  sprintf(framefilename, "%s%05d", argv[1], currentframe);
+                                                                  saveImageToFile(framefilename);
+                                                                  }
+                                                            currenttimestep += timestepfrac;
+                                                            }
 
                                                             end_t = clock();
                                                             total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
                                                             printf("Total time taken by CPU: %f\n", total_t  );
                                                             
-                                                            saveImageToFile(argv[1]);
+                                                            // save at the end for non-animated renders
+                                                            if(numframes == 1) saveImageToFile(argv[1]);
                                                       } // rendering
                                                 } // loading viewing options
 
@@ -184,8 +213,9 @@ char **argv;
                                     free(grn);
                                     free(blu);
 
-                                    // cleanup verts when done or failed further in
+                                    // cleanup verts and cleanverts when done or failed further in
                                     free(verts);
+                                    free(cleanverts);
                               }  // initializing RGB buffers
                               // cleanup polys when done or failed further in
                               free(polys);

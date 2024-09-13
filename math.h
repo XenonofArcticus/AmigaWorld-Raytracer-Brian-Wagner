@@ -1,11 +1,5 @@
 #include <math.h>
 
-extern struct Polygon *polys;
-
-extern struct Vertex *verts;
-
-extern struct ViewOpts vopts;
-
 extern int npoly, nvert;
 
 extern int scrw, scrh;
