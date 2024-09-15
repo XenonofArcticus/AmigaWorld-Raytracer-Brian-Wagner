@@ -61,6 +61,16 @@ SDL_Event event;
    float px, py, ar;
    float dx, dy, dz;
 
+   int GroundR, GroundG, GroundB;
+   float ShadeR, ShadeG, ShadeB;
+
+   GroundR = 136;
+   GroundG = 68;
+   GroundB = 0;
+
+   ShadeR = 0.1985294117647059;
+   ShadeG = ShadeB = 0.2058823529411765;
+
    /* Calculate aspect ratio value. */
 
    ar = (scrw * ((scrh * 4.0) / (scrw * 3.0))) / scrh;
@@ -111,14 +121,14 @@ SDL_Event event;
 
          if (groundhit(&ray, &isec)) {
             if (shadowchk(&isec)) {
-               color.r = 27;
-               color.g = 14;
-               color.b = 0;
+               color.r = GroundR * ShadeR;
+               color.g = GroundG * ShadeG;
+               color.b = GroundB * ShadeB;
             }
             else {
-               color.r = 136;
-               color.g = 68;
-               color.b = 0;
+               color.r = GroundR;
+               color.g = GroundG;
+               color.b = GroundB;
             }
 
             storeRGB(&color, i, j);
