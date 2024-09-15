@@ -38,7 +38,7 @@ target_link_libraries(tracer PRIVATE $<IF:$<TARGET_EXISTS:spng::spng>,spng::spng
 
 # Define the command that generates the output file
 add_test(NAME pyrs256k-generate
-         COMMAND ${CMAKE_BINARY_DIR}/tracer ${CMAKE_SOURCE_DIR}/pyrs ${CMAKE_SOURCE_DIR}/pyrsopts 640 400
+         COMMAND ${CMAKE_BINARY_DIR}/tracer ${CMAKE_SOURCE_DIR}/pyrs ${CMAKE_SOURCE_DIR}/pyrsopts ${CMAKE_SOURCE_DIR}/pyrsopts 640 400 1
          WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
          )
 
