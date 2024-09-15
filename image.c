@@ -244,4 +244,10 @@ void interpolatevopts(struct ViewOpts *dest, struct ViewOpts *start, struct View
 
    // Center of Projection
    dest->cpd = start->cpd + ((end->cpd - start->cpd) * stepfraction);
+
+   // Copy over other parameters uninterpolated
+   dest->scl = start->scl;
+   dest->vpx = start->vpx;
+   dest->vpy = start->vpy;
+
 }
