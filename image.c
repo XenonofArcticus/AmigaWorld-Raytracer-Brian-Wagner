@@ -61,12 +61,22 @@ SDL_Event event;
    float px, py, ar;
    float dx, dy, dz;
 
+   int Gingham = 0;
    int GroundR, GroundG, GroundB;
    float ShadeR, ShadeG, ShadeB;
+   int WhittedGroundA_R, WhittedGroundA_G, WhittedGroundA_B;
+   int WhittedGroundB_R, WhittedGroundB_G, WhittedGroundB_B;
 
    GroundR = 136;
    GroundG = 68;
    GroundB = 0;
+
+   WhittedGroundA_R = 255;
+   WhittedGroundA_G = 255;
+   WhittedGroundA_B = 0;
+   WhittedGroundB_R = 255;
+   WhittedGroundB_G = 0;
+   WhittedGroundB_B = 0;
 
    ShadeR = 0.1985294117647059;
    ShadeG = ShadeB = 0.2058823529411765;
@@ -79,6 +89,13 @@ SDL_Event event;
 
    vpx = vopts.vpx * ar;
    vpy = vopts.vpy;
+
+   // sneaky way to trigger gingham checkerboard
+   if(vopts.scl < 0)
+      {
+         Gingham = 1;
+         vopts.scl = -vopts.scl;
+      }
 
    /* Calculate actual portion of the screen to use. */
 
@@ -120,6 +137,26 @@ SDL_Event event;
          }
 
          if (groundhit(&ray, &isec)) {
+            if(Gingham)
+            {
+               int xTrue = (abs(fmod(isec.ix + 1000000, 2000.0)) > 1000.0);
+               int zTrue = (abs(fmod(isec.iz + 1000000, 2000.0)) > 1000.0);
+
+               if(xTrue ^ zTrue)
+               {
+                  // Whitted Yellow
+                  GroundR = WhittedGroundA_R;
+                  GroundG = WhittedGroundA_G;
+                  GroundB = WhittedGroundA_B;
+               }
+               else
+               {
+                  // Whitted Red
+                  GroundR = WhittedGroundB_R;
+                  GroundG = WhittedGroundB_G;
+                  GroundB = WhittedGroundB_B;
+               }
+            }
             if (shadowchk(&isec)) {
                color.r = GroundR * ShadeR;
                color.g = GroundG * ShadeG;
