@@ -66,17 +66,24 @@ SDL_Event event;
    float ShadeR, ShadeG, ShadeB;
    int WhittedGroundA_R, WhittedGroundA_G, WhittedGroundA_B;
    int WhittedGroundB_R, WhittedGroundB_G, WhittedGroundB_B;
+   int WhittedGroundD_R, WhittedGroundD_G, WhittedGroundD_B;
 
    GroundR = 136;
    GroundG = 68;
    GroundB = 0;
 
+   // Color A: Yellow
    WhittedGroundA_R = 255;
    WhittedGroundA_G = 255;
    WhittedGroundA_B = 0;
+   // Color B: Red
    WhittedGroundB_R = 255;
    WhittedGroundB_G = 0;
    WhittedGroundB_B = 0;
+   // COlor D: Blended in the distance
+   WhittedGroundD_R = 255;
+   WhittedGroundD_G = 128;
+   WhittedGroundD_B = 0;
 
    ShadeR = 0.1985294117647059;
    ShadeG = ShadeB = 0.2058823529411765;
@@ -155,6 +162,14 @@ SDL_Event event;
                   GroundR = WhittedGroundB_R;
                   GroundG = WhittedGroundB_G;
                   GroundB = WhittedGroundB_B;
+               }
+               // do some distance blending of the gingham texture
+               if(isec.iz < -4000.0f)
+               {
+                  float blendFactor = fminf((isec.iz + 4000.0f) / -18000.0f, 1.0f);
+                  GroundR = (GroundR * (1.0 - blendFactor)) + (WhittedGroundD_R * blendFactor);
+                  GroundG = (GroundG * (1.0 - blendFactor)) + (WhittedGroundD_G * blendFactor);
+                  GroundB = (GroundB * (1.0 - blendFactor)) + (WhittedGroundD_B * blendFactor);
                }
             }
             if (shadowchk(&isec)) {
