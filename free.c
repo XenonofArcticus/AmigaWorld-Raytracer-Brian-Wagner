@@ -23,6 +23,7 @@ void freevtxarrays()
       }
 
       free(polys[i].vtx);
+      polys[i].vtx = NULL;
 
       continue;
    }
