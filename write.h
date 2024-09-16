@@ -1,3 +1,3 @@
 void saveImageToFile(char *name);
 
-void 	writeRGB (char *name);
+void    writeRGB(char *name);

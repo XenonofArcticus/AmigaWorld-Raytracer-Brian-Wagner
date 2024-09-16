@@ -5,7 +5,7 @@
 
 extern struct Polygon *polys;
 
-extern int npoly;
+extern int            npoly;
 
 /* Free all polygon vertex arrays which are allocated during the object */
 /* load function. */
@@ -14,8 +14,12 @@ void freevtxarrays()
 {
    int i;
 
-   for (i = 0; i < npoly; i++) {
-      if (polys[i].vtx == NULL) continue;
+   for (i = 0; i < npoly; i++)
+   {
+      if (polys[i].vtx == NULL)
+      {
+         continue;
+      }
 
       free(polys[i].vtx);
 

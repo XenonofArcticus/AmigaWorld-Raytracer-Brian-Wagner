@@ -8,8 +8,8 @@ void storeRGB(struct Color *c, int x, int y);
 
 void traceimage(
 #ifdef WINDOWED_UI
-    SDL_Renderer *rp
+   SDL_Renderer * rp
 #endif // WINDOWED_UI
-    );
+   );
 
 void interpolatevopts(struct ViewOpts *dest, struct ViewOpts *start, struct ViewOpts *end, float stepfraction);

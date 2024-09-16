@@ -1,8 +1,8 @@
 #include <math.h>
 
-extern int npoly, nvert;
+extern int   npoly, nvert;
 
-extern int scrw, scrh;
+extern int   scrw, scrh;
 
 extern float gnx, gny, gnz;
 
