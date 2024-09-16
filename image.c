@@ -20,9 +20,10 @@ extern int scrw, scrh;
 
 /* Store color in the RED, GRN, BLU (RGB) buffers. */
 
-void storeRGB(c, x, y)
-struct Color *c;
-int x, y;
+
+void storeRGB	(	struct Color *	c,
+                                 int	x,
+                                 int	y )
 {
    int pos;
 
@@ -39,12 +40,11 @@ int x, y;
 
 void traceimage(
 #ifdef WINDOWED_UI
-   rp
+   SDL_Renderer *rp
+#else // WINDOWED_UI
+   void
 #endif // WINDOWED_UI
    )
-#ifdef WINDOWED_UI
-SDL_Renderer *rp;
-#endif // WINDOWED_UI
 {
 #ifdef WINDOWED_UI
 SDL_Event event;

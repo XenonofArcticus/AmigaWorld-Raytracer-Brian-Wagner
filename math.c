@@ -20,8 +20,7 @@ extern float gnx, gny, gnz;
 /* Calculate a unit vector by dividing each component by the their */
 /* combined length. */
 
-void unitvector(x, y, z)
-float *x, *y, *z;
+void 	unitvector (float *x, float *y, float *z)
 {
    float len;
 
@@ -39,7 +38,7 @@ float *x, *y, *z;
 /* Transform object vertices and light source position to the view plane */
 /* coordinate system.  This is done to greatly simplify calculations. */
 
-void transform()
+void transform(void)
 {
    int i;
    float nx, ny, nz, s;
@@ -141,7 +140,7 @@ void transform()
 /* Calculate surface normals for the polygons by using the vector cross */
 /* product operation. */
 
-void calcnormals()
+void calcnormals(void)
 {
    int i, oi, ai, bi;
    float ax, ay, az, bx, by, bz;
@@ -177,10 +176,7 @@ void calcnormals()
 
 /* Check to see if a ray and triangle intersect. */
 
-int trianglehit(r, t, i)
-struct Ray *r;
-struct Triangle *t;
-struct Intersection *i;
+int 	trianglehit (struct Ray *r, struct Triangle *t, struct Intersection *i)
 {
    float px, py, pz, n, d, v;
    float ix, iy, iz, x, y;
@@ -259,10 +255,7 @@ struct Intersection *i;
 
 /* Check to see if a ray and polygon intersect. */
 
-int polygonhit(r, p, i)
-struct Ray *r;
-struct Polygon *p;
-struct Intersection *i;
+polygonhit (struct Ray *r, struct Polygon *p, struct Intersection *i)
 {
    struct Triangle t;
 
@@ -307,9 +300,7 @@ struct Intersection *i;
 
 /* Check to see if a ray hits the ground. */
 
-int groundhit(r, i)
-struct Ray *r;
-struct Intersection *i;
+int 	groundhit (struct Ray *r, struct Intersection *i)
 {
    float px, py, pz;
    float n, d, v;
@@ -342,8 +333,7 @@ struct Intersection *i;
 /* Check to see if ANY polygons lie between a surface point and */
 /* the light source. */
 
-int shadowchk(i)
-struct Intersection *i;
+int 	shadowchk (struct Intersection *i)
 {
    struct Ray ray;
 
@@ -379,9 +369,7 @@ struct Intersection *i;
 
 /* Calculate shade of color for a given surface point. */
 
-void shadepoint(i, c)
-struct Intersection *i;
-struct Color *c;
+void 	shadepoint (struct Intersection *i, struct Color *c)
 {
    struct Polygon *p;
 
@@ -410,9 +398,7 @@ struct Color *c;
 
 /* Calculate a sky color based on ray direction. */
 
-void shadesky(r, c)
-struct Ray *r;
-struct Color *c;
+void 	shadesky (struct Ray *r, struct Color *c)
 {
    int zr, zg, zb;
    int hr, hg, hb;

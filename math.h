@@ -16,12 +16,12 @@ void unitvector(float *x, float *y, float *z);
 /* Transform object vertices and light source position to the view plane */
 /* coordinate system.  This is done to greatly simplify calculations. */
 
-void transform();
+void transform(void);
 
 /* Calculate surface normals for the polygons by using the vector cross */
 /* product operation. */
 
-void calcnormals();
+void calcnormals(void);
 
 /* Check to see if a ray and triangle intersect. */
 

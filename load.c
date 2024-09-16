@@ -13,9 +13,7 @@ extern int npoly, nvert;
 
 /* Convert GEO color code to equivalent RGB color values. */
 
-void convertcol(col, poly)
-int col;
-struct Polygon *poly;
+void 	convertcol (int col, struct Polygon *poly)
 {
    switch(col) {
       case 0 : poly->r = 0;
@@ -95,7 +93,7 @@ struct Polygon *poly;
 /* arrays are allocated during the load since the number of vertices per */
 /* polygon can vary greatly. */
 
-int loadobject(char *file, struct Vertex *loadverts)
+int 	loadobject (char *file, struct Vertex *loadverts)
 {
    FILE *fp;
 
@@ -219,7 +217,7 @@ int loadobject(char *file, struct Vertex *loadverts)
 
 /* Load viewing options and store in the global 'vopts' structure. */
 
-int loadvopts(char *file, struct ViewOpts *destvopts)
+int 	loadvopts (char *file, struct ViewOpts *destvopts)
 {
    FILE *fp;
 

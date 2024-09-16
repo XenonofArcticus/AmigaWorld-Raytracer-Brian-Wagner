@@ -12,8 +12,7 @@ extern int scrw, scrh;
 
 /* Write out the RED, GRN, BLU (RGB) buffers. */
 
-void saveImageToFile(name)
-char *name;
+void 	saveImageToFile (char *name)
 {
    #ifdef OUTPUT_PNG
    writePNG(name);
@@ -124,8 +123,7 @@ encode_error:
     }
 #endif // OUTPUT_PNG
 
-void writeRGB(name)
-char *name;
+void 	writeRGB (char *name)
 {
    char file[500];
    int size, err;
