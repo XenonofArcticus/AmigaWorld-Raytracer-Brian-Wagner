@@ -108,9 +108,9 @@ int writePNG(char *name)
          printf("spng_get_png_buffer() error: %s\n", spng_strerror(ret));
       }
 
-      strcpy_s(file, WRITE_FILENAME_MAXLEN - strlen(PNG_SUFFIX_STR), name);
+      snprintf(file, WRITE_FILENAME_MAXLEN - strlen(PNG_SUFFIX_STR), "%s", name);
 
-      strcat_s(file, WRITE_FILENAME_MAXLEN, PNG_SUFFIX_STR);
+      strncat(file, PNG_SUFFIX_STR, WRITE_FILENAME_MAXLEN - (strlen(file) - 1));
 
       fh = fopen(file, "wb");
 
@@ -143,9 +143,9 @@ void    writeRGB(char *name)
 
    size = scrw * scrh;
 
-   strcpy_s(file, WRITE_FILENAME_MAXLEN - strlen(RED_SUFFIX_STR), name);
+   snprintf(file, WRITE_FILENAME_MAXLEN - strlen(RED_SUFFIX_STR), "%s", name);
 
-   strcat_s(file, WRITE_FILENAME_MAXLEN, RED_SUFFIX_STR);
+   strncat(file, RED_SUFFIX_STR, WRITE_FILENAME_MAXLEN - (strlen(file) - 1));
 
    fh = fopen(file, "wb");
 
@@ -169,9 +169,9 @@ void    writeRGB(char *name)
 
    fclose(fh);
 
-   strcpy_s(file, WRITE_FILENAME_MAXLEN - strlen(GRN_SUFFIX_STR), name);
+   snprintf(file, WRITE_FILENAME_MAXLEN - strlen(GRN_SUFFIX_STR), "%s", name);
 
-   strcat_s(file, WRITE_FILENAME_MAXLEN, GRN_SUFFIX_STR);
+   strncat(file, GRN_SUFFIX_STR, WRITE_FILENAME_MAXLEN - (strlen(file) - 1));
 
    fh = fopen(file, "wb");
 
@@ -195,9 +195,9 @@ void    writeRGB(char *name)
 
    fclose(fh);
 
-   strcpy_s(file, WRITE_FILENAME_MAXLEN - strlen(BLU_SUFFIX_STR), name);
+   snprintf(file, WRITE_FILENAME_MAXLEN - strlen(BLU_SUFFIX_STR), "%s", name);
 
-   strcat_s(file, WRITE_FILENAME_MAXLEN, BLU_SUFFIX_STR);
+   strncat(file, BLU_SUFFIX_STR, WRITE_FILENAME_MAXLEN - (strlen(file) - 1));
 
    fh = fopen(file, "wb");
 
