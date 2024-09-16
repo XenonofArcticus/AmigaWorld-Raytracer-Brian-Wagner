@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include <stdlib.h>
 
 #include "tracer.h"
 #include "free.h"

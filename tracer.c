@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 #ifdef WINDOWED_UI
 #include <SDL2/SDL.h>

@@ -1,10 +1,21 @@
 #include <string.h>
+#include <stdio.h>
 
 #include "tracer.h"
 
 #ifdef OUTPUT_PNG
 #include <spng.h>
 #endif // OUTPUT_PNG
+
+#define WRITE_FILENAME_MAXLEN    500
+#define PNG_SUFFIX_TLA "png"
+#define PNG_SUFFIX_STR "." PNG_SUFFIX_TLA
+#define RED_SUFFIX_TLA "red"
+#define RED_SUFFIX_STR "." RED_SUFFIX_TLA
+#define GRN_SUFFIX_TLA "grn"
+#define GRN_SUFFIX_STR "." GRN_SUFFIX_TLA
+#define BLU_SUFFIX_TLA "blu"
+#define BLU_SUFFIX_STR "." BLU_SUFFIX_TLA
 
 extern unsigned char *red, *grn, *blu;
 
@@ -24,7 +35,7 @@ void    saveImageToFile(char *name)
 #ifdef OUTPUT_PNG
 int writePNG(char *name)
 {
-   char          file[500];
+   char          file[WRITE_FILENAME_MAXLEN];
    int           err;
    FILE          *fh;
    unsigned char *image;
@@ -97,9 +108,9 @@ int writePNG(char *name)
          printf("spng_get_png_buffer() error: %s\n", spng_strerror(ret));
       }
 
-      strcpy(file, name);
+      strcpy_s(file, WRITE_FILENAME_MAXLEN - strlen(PNG_SUFFIX_STR), name);
 
-      strcat(file, ".png");
+      strcat_s(file, WRITE_FILENAME_MAXLEN, PNG_SUFFIX_STR);
 
       fh = fopen(file, "wb");
 
@@ -132,9 +143,9 @@ void    writeRGB(char *name)
 
    size = scrw * scrh;
 
-   strcpy(file, name);
+   strcpy_s(file, WRITE_FILENAME_MAXLEN - strlen(RED_SUFFIX_STR), name);
 
-   strcat(file, ".red");
+   strcat_s(file, WRITE_FILENAME_MAXLEN, RED_SUFFIX_STR);
 
    fh = fopen(file, "wb");
 
@@ -158,9 +169,9 @@ void    writeRGB(char *name)
 
    fclose(fh);
 
-   strcpy(file, name);
+   strcpy_s(file, WRITE_FILENAME_MAXLEN - strlen(GRN_SUFFIX_STR), name);
 
-   strcat(file, ".grn");
+   strcat_s(file, WRITE_FILENAME_MAXLEN, GRN_SUFFIX_STR);
 
    fh = fopen(file, "wb");
 
@@ -184,9 +195,9 @@ void    writeRGB(char *name)
 
    fclose(fh);
 
-   strcpy(file, name);
+   strcpy_s(file, WRITE_FILENAME_MAXLEN - strlen(BLU_SUFFIX_STR), name);
 
-   strcat(file, ".blu");
+   strcat_s(file, WRITE_FILENAME_MAXLEN, BLU_SUFFIX_STR);
 
    fh = fopen(file, "wb");
 
