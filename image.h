@@ -5,6 +5,8 @@
 #include <SDL2/SDL.h>
 #endif // !WINDOWED_UI
 
+#include "tracer.h" // for ViewOpts and Color structures
+
 /* Store color in the RED, GRN, BLU (RGB) buffers. */
 
 void storeRGB(struct Color *c, int x, int y);

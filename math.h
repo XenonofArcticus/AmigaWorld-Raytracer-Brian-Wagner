@@ -2,6 +2,7 @@
 #define RAYTRACER_MATH_H
 
 #include <math.h>
+#include "tracer.h" // for Ray, Intersection and Color
 
 extern int   npoly, nvert;
 

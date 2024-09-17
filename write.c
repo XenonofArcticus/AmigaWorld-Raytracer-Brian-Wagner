@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "tracer.h"
+#include "write.h"
 
 #ifdef OUTPUT_PNG
 #include <spng.h>
