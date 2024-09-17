@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #ifdef WINDOWED_UI
 #include <SDL2/SDL.h>
 #endif // WINDOWED_UI
