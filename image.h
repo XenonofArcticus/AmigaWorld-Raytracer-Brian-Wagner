@@ -1,3 +1,6 @@
+#ifndef RAYTRACER_IMAGE_H
+#define RAYTRACER_IMAGE_H
+
 #ifdef WINDOWED_UI
 #include <SDL2/SDL.h>
 #endif // !WINDOWED_UI
@@ -13,3 +16,5 @@ void traceimage(
    );
 
 void interpolatevopts(struct ViewOpts *dest, struct ViewOpts *start, struct ViewOpts *end, float stepfraction);
+
+#endif // RAYTRACER_IMAGE_H

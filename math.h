@@ -1,3 +1,6 @@
+#ifndef RAYTRACER_MATH_H
+#define RAYTRACER_MATH_H
+
 #include <math.h>
 
 extern int   npoly, nvert;
@@ -48,3 +51,4 @@ void shadepoint(struct Intersection *i, struct Color *c);
 
 void shadesky(struct Ray *r, struct Color *c);
 
+#endif // RAYTRACER_MATH_H
