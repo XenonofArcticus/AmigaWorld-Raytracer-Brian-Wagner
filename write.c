@@ -8,7 +8,7 @@
 #include <spng.h>
 #endif // OUTPUT_PNG
 
-#define WRITE_FILENAME_MAXLEN    500
+#define WRITE_FILENAME_MAXLEN    1024
 #define PNG_SUFFIX_TLA "png"
 #define PNG_SUFFIX_STR "." PNG_SUFFIX_TLA
 #define RED_SUFFIX_TLA "red"
@@ -109,9 +109,11 @@ int writePNG(char *name)
          printf("spng_get_png_buffer() error: %s\n", spng_strerror(ret));
       }
 
+      // NOLINTBEGIN(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
       snprintf(file, WRITE_FILENAME_MAXLEN - strlen(PNG_SUFFIX_STR), "%s", name);
 
       strncat(file, PNG_SUFFIX_STR, WRITE_FILENAME_MAXLEN - (strlen(file) - 1));
+      // NOLINTEND(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
 
       fh = fopen(file, "wb");
 
@@ -138,15 +140,17 @@ int writePNG(char *name)
 
 void    writeRGB(char *name)
 {
-   char file[500];
+   char file[WRITE_FILENAME_MAXLEN];
    int  size, err;
    FILE *fh;
 
    size = scrw * scrh;
 
+   // NOLINTBEGIN(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    snprintf(file, WRITE_FILENAME_MAXLEN - strlen(RED_SUFFIX_STR), "%s", name);
 
    strncat(file, RED_SUFFIX_STR, WRITE_FILENAME_MAXLEN - (strlen(file) - 1));
+   // NOLINTEND(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
 
    fh = fopen(file, "wb");
 
@@ -170,9 +174,11 @@ void    writeRGB(char *name)
 
    fclose(fh);
 
+   // NOLINTBEGIN(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    snprintf(file, WRITE_FILENAME_MAXLEN - strlen(GRN_SUFFIX_STR), "%s", name);
 
    strncat(file, GRN_SUFFIX_STR, WRITE_FILENAME_MAXLEN - (strlen(file) - 1));
+   // NOLINTEND(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
 
    fh = fopen(file, "wb");
 
@@ -196,9 +202,11 @@ void    writeRGB(char *name)
 
    fclose(fh);
 
+   // NOLINTBEGIN(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    snprintf(file, WRITE_FILENAME_MAXLEN - strlen(BLU_SUFFIX_STR), "%s", name);
 
    strncat(file, BLU_SUFFIX_STR, WRITE_FILENAME_MAXLEN - (strlen(file) - 1));
+   // NOLINTEND(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
 
    fh = fopen(file, "wb");
 
