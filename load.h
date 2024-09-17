@@ -1,5 +1,5 @@
-#ifndef RAYTRACER_TRACER_H
-#define RAYTRACER_TRACER_H
+#ifndef RAYTRACER_LOAD_H
+#define RAYTRACER_LOAD_H
 
 #include "tracer.h"
 void convertcol(int col, struct Polygon *poly);
@@ -14,4 +14,4 @@ int loadobject(char *file, struct Vertex *loadverts);
 
 int loadvopts(char *file, struct ViewOpts *destvopts);
 
-#endif // RAYTRACER_TRACER_H
+#endif // RAYTRACER_LOAD_H
