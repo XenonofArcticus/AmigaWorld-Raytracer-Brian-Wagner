@@ -50,8 +50,25 @@ add_test(NAME pyrs256k-compare
          WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
+# Define the command that generates the gingham output file
+add_test(NAME pyrs256k_gingham-generate
+         COMMAND ${CMAKE_BINARY_DIR}/tracer ${CMAKE_SOURCE_DIR}/pyrs ${CMAKE_SOURCE_DIR}/pyrsopts_gingham ${CMAKE_SOURCE_DIR}/pyrsopts_gingham 640 400 1
+         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+         )
+
+         # Compare testdata gingham output and unverified recent output
+add_test(NAME pyrs256k_gingham-compare
+         COMMAND ${CMAKE_COMMAND} -E compare_files
+         ${CMAKE_SOURCE_DIR}/pyrs.png
+         ${CMAKE_SOURCE_DIR}/testdata/pyrs_gingham.png
+         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
+
 # Ensure that the comparison test only runs after the output is generated
 add_custom_target(run_tests
     COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
     DEPENDS pyrs256k-generate pyrs256k-compare
+    # first generate and compare must be complete before starting second generate
+    DEPENDS pyrs256k_gingham-generate pyrs256k_gingham-compare pyrs256k-generate pyrs256k-compare
 )

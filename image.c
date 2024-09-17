@@ -153,8 +153,8 @@ void traceimage(
          {
             if (Gingham)
             {
-               int xTrue = (abs(fmod(isec.ix + 1000000, 2000.0)) > 1000.0);
-               int zTrue = (abs(fmod(isec.iz + 1000000, 2000.0)) > 1000.0);
+               int xTrue = (abs(((int)(isec.ix) + 1000000) % 2000) > 1000);
+               int zTrue = (abs(((int)(isec.iz) + 1000000) % 2000) > 1000);
 
                if (xTrue ^ zTrue)
                {
