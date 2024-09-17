@@ -43,7 +43,7 @@ void transform(void)
 {
    int   i;
    float nx, ny, nz, s;
-   float sx, cx, sy, cy;
+   float sx = 0.0f, cx = 0.0f, sy = 0.0f, cy = 0.0f; // initialization to eliminate false positives in static analysis tools
    float vx, vy, vz;
    float tx, ty, tz;
 
@@ -277,7 +277,7 @@ int     trianglehit(struct Ray *r, struct Triangle *t, struct Intersection *i)
 
 /* Check to see if a ray and polygon intersect. */
 
-polygonhit(struct Ray *r, struct Polygon *p, struct Intersection *i)
+int polygonhit(struct Ray *r, struct Polygon *p, struct Intersection *i)
 {
    struct Triangle t;
 
