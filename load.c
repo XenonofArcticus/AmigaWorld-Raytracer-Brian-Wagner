@@ -181,7 +181,7 @@ int     loadobject(char *file, struct Vertex *loadverts)
 
    while (1)
    {
-      fscanf(fp, "%ld ", &cnt);
+      fscanf(fp, "%d ", &cnt);
 
       if (feof(fp))
       {
@@ -218,7 +218,7 @@ int     loadobject(char *file, struct Vertex *loadverts)
          }
       }
 
-      fscanf(fp, "%ld\n", &col);
+      fscanf(fp, "%d\n", &col);
 
       if (ferror(fp))
       {
