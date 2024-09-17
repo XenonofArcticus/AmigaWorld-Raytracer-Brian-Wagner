@@ -124,6 +124,7 @@ int     loadobject(char *file, struct Vertex *loadverts)
       return 1;
    }
 
+   // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    fscanf(fp, "%4s\n", id);
 
    if (ferror(fp))
@@ -147,6 +148,7 @@ int     loadobject(char *file, struct Vertex *loadverts)
       return 2;
    }
 
+   // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    fscanf(fp, "%d\n", &nvert);
 
    if (ferror(fp))
@@ -158,6 +160,7 @@ int     loadobject(char *file, struct Vertex *loadverts)
 
    for (i = 0; i < nvert; i++)
    {
+      // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
       fscanf(fp, "%f %f %f\n", &loadverts[i].x, &loadverts[i].y, &loadverts[i].z);
 
       if (ferror(fp))
@@ -181,6 +184,7 @@ int     loadobject(char *file, struct Vertex *loadverts)
 
    while (1)
    {
+      // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
       fscanf(fp, "%d ", &cnt);
 
       if (feof(fp))
@@ -208,6 +212,7 @@ int     loadobject(char *file, struct Vertex *loadverts)
 
       for (i = 0; i < cnt; i++)
       {
+         // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
          fscanf(fp, "%d ", &polys[npoly].vtx[i]);
 
          if (ferror(fp))
@@ -218,6 +223,7 @@ int     loadobject(char *file, struct Vertex *loadverts)
          }
       }
 
+      // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
       fscanf(fp, "%d\n", &col);
 
       if (ferror(fp))
@@ -282,6 +288,7 @@ int     loadvopts(char *file, struct ViewOpts *destvopts)
       return 1;
    }
 
+   // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    fscanf(fp, "%f %f %f\n", &destvopts->cax, &destvopts->cay, &destvopts->caz);
 
    if (ferror(fp))
@@ -291,6 +298,7 @@ int     loadvopts(char *file, struct ViewOpts *destvopts)
       return 1;
    }
 
+   // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    fscanf(fp, "%f %f %f\n", &destvopts->lpx, &destvopts->lpy, &destvopts->lpz);
 
    if (ferror(fp))
@@ -300,6 +308,7 @@ int     loadvopts(char *file, struct ViewOpts *destvopts)
       return 1;
    }
 
+   // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    fscanf(fp, "%f\n", &destvopts->scl);
 
    if (ferror(fp))
@@ -309,6 +318,7 @@ int     loadvopts(char *file, struct ViewOpts *destvopts)
       return 1;
    }
 
+   // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    fscanf(fp, "%f %f %f\n", &destvopts->lsx, &destvopts->lsy, &destvopts->lsz);
 
    if (ferror(fp))
@@ -318,6 +328,7 @@ int     loadvopts(char *file, struct ViewOpts *destvopts)
       return 1;
    }
 
+   // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    fscanf(fp, "%f %f\n", &destvopts->vpx, &destvopts->vpy);
 
    if (ferror(fp))
@@ -327,6 +338,7 @@ int     loadvopts(char *file, struct ViewOpts *destvopts)
       return 1;
    }
 
+   // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    fscanf(fp, "%f\n", &destvopts->wdy);
 
    if (ferror(fp))
@@ -336,6 +348,7 @@ int     loadvopts(char *file, struct ViewOpts *destvopts)
       return 1;
    }
 
+   // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    fscanf(fp, "%f\n", &destvopts->cpd);
 
    if (ferror(fp))
