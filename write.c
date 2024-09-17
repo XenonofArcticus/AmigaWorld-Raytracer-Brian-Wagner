@@ -109,11 +109,11 @@ int writePNG(char *name)
          printf("spng_get_png_buffer() error: %s\n", spng_strerror(ret));
       }
 
-      // NOLINTBEGIN(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
+      // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
       snprintf(file, WRITE_FILENAME_MAXLEN - strlen(PNG_SUFFIX_STR), "%s", name);
 
+      // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
       strncat(file, PNG_SUFFIX_STR, WRITE_FILENAME_MAXLEN - (strlen(file) - 1));
-      // NOLINTEND(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
 
       fh = fopen(file, "wb");
 
@@ -146,11 +146,11 @@ void    writeRGB(char *name)
 
    size = scrw * scrh;
 
-   // NOLINTBEGIN(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
+   // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    snprintf(file, WRITE_FILENAME_MAXLEN - strlen(RED_SUFFIX_STR), "%s", name);
 
+   // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    strncat(file, RED_SUFFIX_STR, WRITE_FILENAME_MAXLEN - (strlen(file) - 1));
-   // NOLINTEND(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
 
    fh = fopen(file, "wb");
 
@@ -174,11 +174,11 @@ void    writeRGB(char *name)
 
    fclose(fh);
 
-   // NOLINTBEGIN(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
+   // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    snprintf(file, WRITE_FILENAME_MAXLEN - strlen(GRN_SUFFIX_STR), "%s", name);
 
+   // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    strncat(file, GRN_SUFFIX_STR, WRITE_FILENAME_MAXLEN - (strlen(file) - 1));
-   // NOLINTEND(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
 
    fh = fopen(file, "wb");
 
@@ -202,11 +202,11 @@ void    writeRGB(char *name)
 
    fclose(fh);
 
-   // NOLINTBEGIN(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
+   // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    snprintf(file, WRITE_FILENAME_MAXLEN - strlen(BLU_SUFFIX_STR), "%s", name);
 
+   // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
    strncat(file, BLU_SUFFIX_STR, WRITE_FILENAME_MAXLEN - (strlen(file) - 1));
-   // NOLINTEND(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
 
    fh = fopen(file, "wb");
 
