@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
+#include <string.h>
 
 #ifdef WINDOWED_UI
 #include <SDL2/SDL.h>
@@ -11,7 +13,6 @@
 #include "load.h"
 #include "image.h"
 #include "write.h"
-#include <time.h>
 
 struct ViewOpts vopts, vopts_start, vopts_end; // vopts is the current vopts
 
@@ -36,7 +37,7 @@ int SDL_main(int argc, char *argv[])
    SDL_Renderer *rp = NULL;
    SDL_Window   *wp = NULL;
 #else // !WINDOWED_UI
-void main(argc, argv)
+int main(argc, argv)
 int argc;
 char **argv;
 {
@@ -125,7 +126,7 @@ char **argv;
                                        #endif // WINDOWED_UI
                      {                                             // continue with initialization by loading object
                         /* Load object to be displayed. */
-                        if (err = loadobject(argv[1], cleanverts)) // err is non-zero for failure
+                        if ((err = loadobject(argv[1], cleanverts)) == 1) // err is non-zero for failure
                         {
                            if (err == 1)
                            {
@@ -190,7 +191,7 @@ char **argv;
                                  traceimage(
                                                          #ifdef WINDOWED_UI
                                     rp
-                                                         #endif / WINDOWED_UI
+                                                         #endif // WINDOWED_UI
                                     );
 
                                  // save frames during animation
