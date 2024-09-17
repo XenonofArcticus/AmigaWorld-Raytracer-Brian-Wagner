@@ -14,6 +14,11 @@
 #include "image.h"
 #include "write.h"
 
+#define ANIMATION_WRITE_FILEPATH_MAXLEN    1024
+#define ANIMATION_WRITE_FILEPATH_MAXBASENAME_FORMAT "1018" // ANIMATION_WRITE_FILEPATH_MAXLEN - ANIMATION_WRITE_FILEPATH_MAXDIGITS_FORMAT - 1 
+#define ANIMATION_WRITE_FILEPATH_MAXDIGITS_FORMAT  "%05d"
+
+
 struct ViewOpts vopts, vopts_start, vopts_end; // vopts is the current vopts
 
 struct Polygon  *polys = NULL;
@@ -167,7 +172,7 @@ char **argv;
                            else                         // continue with rendering
                            {
                               // initialize the current vopts from the start vopts
-                              memcpy(&vopts, &vopts_start, sizeof(struct ViewOpts));
+                              memcpy(&vopts, &vopts_start, sizeof(struct ViewOpts)); // NOLINT(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
 
                               /* start timing computation */
                               clock_t start_t, end_t;
@@ -182,7 +187,7 @@ char **argv;
                               for (int currentframe = 0; currentframe < numframes; currentframe++)
                               {
                                  // refresh clean copy of verts from cleanverts
-                                 memcpy(verts, cleanverts, (MAXVERTS * sizeof(struct Vertex)));
+                                 memcpy(verts, cleanverts, (MAXVERTS * sizeof(struct Vertex))); // NOLINT(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
                                  interpolatevopts(&vopts, &vopts_start, &vopts_end, currenttimestep);
 
                                  /* Call each function in the display process. */
@@ -197,8 +202,9 @@ char **argv;
                                  // save frames during animation
                                  if (numframes > 1)
                                  {
-                                    char framefilename[255];                            // poor practice making this fixed size...
-                                    sprintf(framefilename, "%s%05d", argv[1], currentframe);
+                                    char framefilename[ANIMATION_WRITE_FILEPATH_MAXLEN]; // poor practice making this fixed size, but it's large
+                                    // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
+                                    sprintf(framefilename, "%."ANIMATION_WRITE_FILEPATH_MAXBASENAME_FORMAT "s" ANIMATION_WRITE_FILEPATH_MAXDIGITS_FORMAT, argv[1], currentframe);
                                     saveImageToFile(framefilename);
                                  }
                                  currenttimestep += timestepfrac;
