@@ -1,5 +1,5 @@
 /**
- * @file math.h
+ * @file math.c
  * @brief Mathematical functions for vector and intersection calculations.
  */
 
