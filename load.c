@@ -1,3 +1,7 @@
+/**
+ * @file load.c
+ * @brief Functions to load scene data for the raytracer.
+ */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -275,7 +279,6 @@ int     loadobject(char *file, struct Vertex *loadverts)
    return 0;
 }
 
-/* Load viewing options and store in the global 'vopts' structure. */
 
 int     loadvopts(char *file, struct ViewOpts *destvopts)
 {

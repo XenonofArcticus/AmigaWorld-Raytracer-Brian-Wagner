@@ -1,3 +1,8 @@
+/**
+ * @file tracer.c
+ * @brief Raytracer core functions and structures.
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
@@ -42,9 +47,7 @@ int SDL_main(int argc, char *argv[])
    SDL_Renderer *rp = NULL;
    SDL_Window   *wp = NULL;
 #else // !WINDOWED_UI
-int main(argc, argv)
-int argc;
-char **argv;
+int main(int argc, char *argv[])
 {
 #endif // !WINDOWED_UI
 

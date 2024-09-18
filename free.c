@@ -1,3 +1,8 @@
+/**
+ * @file free.c
+ * @brief Functions to manage memory deallocation for raytracer structures.
+ */
+
 #include <stddef.h>
 #include <stdlib.h>
 

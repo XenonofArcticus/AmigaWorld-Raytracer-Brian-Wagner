@@ -1,3 +1,14 @@
+/**
+ * @file write.c
+ * @brief Functions for saving image data to files in RGB or PNG format.
+ * 
+ * This file contains functions that handle saving the rendered image data 
+ * to output files. The image can either be saved as separate RGB files 
+ * or as a PNG file if PNG support is enabled. The file uses external 
+ * libraries for PNG encoding and supports writing images in RGB format 
+ * by interleaving data from separate red, green, and blue buffers.
+ */
+
 #include <string.h>
 #include <stdio.h>
 
@@ -72,7 +83,6 @@ int writePNG(char *name)
    // extra step here -- tracer provides three discrete arrays for R, G, B
    // but PNG code wants one triple-sized interleaved R,G,B,R,G,B,etc
    // so we allocate one triple-sized array, interleave with a loop, and then free when done
-
 
    length = scrw * scrh * 3;
    if (image = malloc(length))

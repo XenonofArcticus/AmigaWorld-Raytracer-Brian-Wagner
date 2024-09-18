@@ -1,3 +1,8 @@
+/**
+ * @file image.c
+ * @brief Image manipulation functions used in the raytracer.
+ */
+
 #include <stdlib.h>
 #ifdef WINDOWED_UI
 #include <SDL2/SDL.h>

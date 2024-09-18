@@ -1,24 +1,19 @@
+/**
+ * @file math.h
+ * @brief Mathematical functions for vector and intersection calculations.
+ */
+
 #include <math.h> // system math.h
 
 #include "tracer.h"
 #include "math.h" // project's math.h
 
 extern struct Polygon  *polys;
-
 extern struct Vertex   *verts;
-
 extern struct ViewOpts vopts;
-
 extern int             npoly, nvert;
-
 extern int             scrw, scrh;
-
 extern float           gnx, gny, gnz;
-
-// extern float sqrt();// defined in system math.h
-
-/* Calculate a unit vector by dividing each component by the their */
-/* combined length. */
 
 void    unitvector(float *x, float *y, float *z)
 {
