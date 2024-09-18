@@ -36,6 +36,28 @@ target_link_libraries(tracer
 
 target_link_libraries(tracer PRIVATE $<IF:$<TARGET_EXISTS:spng::spng>,spng::spng,spng::spng_static>) 
 
+# Define a list of source files to format
+file(GLOB_RECURSE SOURCE_FILES 
+    "${CMAKE_SOURCE_DIR}/*.c"
+    "${CMAKE_SOURCE_DIR}/*.cpp"
+    "${CMAKE_SOURCE_DIR}/*.h"
+    "${CMAKE_SOURCE_DIR}/*.hpp"
+)
+
+# Set the uncrustify command
+set(UNCRUSTIFY_COMMAND uncrustify -c ${CMAKE_SOURCE_DIR}/xen.cfg --replace)
+
+# Create a custom target to format all source files
+add_custom_target(uncrustify_format
+    COMMAND ${UNCRUSTIFY_COMMAND} ${SOURCE_FILES}
+    COMMENT ${UNCRUSTIFY_COMMAND}
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
+# Optionally, make uncrustify_format run before build
+# add_dependencies(tracer uncrustify_format)
+
+
 # Define the command that generates the output file
 add_test(NAME pyrs256k-generate
          COMMAND ${CMAKE_BINARY_DIR}/tracer ${CMAKE_SOURCE_DIR}/pyrs ${CMAKE_SOURCE_DIR}/pyrsopts ${CMAKE_SOURCE_DIR}/pyrsopts 640 400 1

@@ -19,9 +19,9 @@
 #include "image.h"
 #include "write.h"
 
-#define ANIMATION_WRITE_FILEPATH_MAXLEN    1024
-#define ANIMATION_WRITE_FILEPATH_MAXBASENAME_FORMAT "1018" // ANIMATION_WRITE_FILEPATH_MAXLEN - ANIMATION_WRITE_FILEPATH_MAXDIGITS_FORMAT - 1 
-#define ANIMATION_WRITE_FILEPATH_MAXDIGITS_FORMAT  "%05d"
+#define ANIMATION_WRITE_FILEPATH_MAXLEN                1024
+#define ANIMATION_WRITE_FILEPATH_MAXBASENAME_FORMAT    "1018" // ANIMATION_WRITE_FILEPATH_MAXLEN - ANIMATION_WRITE_FILEPATH_MAXDIGITS_FORMAT - 1
+#define ANIMATION_WRITE_FILEPATH_MAXDIGITS_FORMAT      "%05d"
 
 
 struct ViewOpts vopts, vopts_start, vopts_end; // vopts is the current vopts
@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
                      }
                      else
                                        #endif // WINDOWED_UI
-                     {                                             // continue with initialization by loading object
+                     {                                                    // continue with initialization by loading object
                         /* Load object to be displayed. */
                         if ((err = loadobject(argv[1], cleanverts)) == 1) // err is non-zero for failure
                         {

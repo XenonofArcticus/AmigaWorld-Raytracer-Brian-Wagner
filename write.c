@@ -1,11 +1,11 @@
 /**
  * @file write.c
  * @brief Functions for saving image data to files in RGB or PNG format.
- * 
- * This file contains functions that handle saving the rendered image data 
- * to output files. The image can either be saved as separate RGB files 
- * or as a PNG file if PNG support is enabled. The file uses external 
- * libraries for PNG encoding and supports writing images in RGB format 
+ *
+ * This file contains functions that handle saving the rendered image data
+ * to output files. The image can either be saved as separate RGB files
+ * or as a PNG file if PNG support is enabled. The file uses external
+ * libraries for PNG encoding and supports writing images in RGB format
  * by interleaving data from separate red, green, and blue buffers.
  */
 
@@ -20,14 +20,14 @@
 #endif // OUTPUT_PNG
 
 #define WRITE_FILENAME_MAXLEN    1024
-#define PNG_SUFFIX_TLA "png"
-#define PNG_SUFFIX_STR "." PNG_SUFFIX_TLA
-#define RED_SUFFIX_TLA "red"
-#define RED_SUFFIX_STR "." RED_SUFFIX_TLA
-#define GRN_SUFFIX_TLA "grn"
-#define GRN_SUFFIX_STR "." GRN_SUFFIX_TLA
-#define BLU_SUFFIX_TLA "blu"
-#define BLU_SUFFIX_STR "." BLU_SUFFIX_TLA
+#define PNG_SUFFIX_TLA           "png"
+#define PNG_SUFFIX_STR           "." PNG_SUFFIX_TLA
+#define RED_SUFFIX_TLA           "red"
+#define RED_SUFFIX_STR           "." RED_SUFFIX_TLA
+#define GRN_SUFFIX_TLA           "grn"
+#define GRN_SUFFIX_STR           "." GRN_SUFFIX_TLA
+#define BLU_SUFFIX_TLA           "blu"
+#define BLU_SUFFIX_STR           "." BLU_SUFFIX_TLA
 
 extern unsigned char *red, *grn, *blu;
 
