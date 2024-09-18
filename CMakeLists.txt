@@ -37,7 +37,7 @@ target_link_libraries(tracer
 target_link_libraries(tracer PRIVATE $<IF:$<TARGET_EXISTS:spng::spng>,spng::spng,spng::spng_static>) 
 
 # Define a list of source files to format
-file(GLOB_RECURSE SOURCE_FILES 
+file(GLOB SOURCE_FILES LIST_DIRECTORIES false 
     "${CMAKE_SOURCE_DIR}/*.c"
     "${CMAKE_SOURCE_DIR}/*.cpp"
     "${CMAKE_SOURCE_DIR}/*.h"
@@ -45,7 +45,7 @@ file(GLOB_RECURSE SOURCE_FILES
 )
 
 # Set the uncrustify command
-set(UNCRUSTIFY_COMMAND uncrustify -c ${CMAKE_SOURCE_DIR}/xen.cfg --replace)
+set(UNCRUSTIFY_COMMAND uncrustify -c ${CMAKE_SOURCE_DIR}/xen.cfg --replace --no-backup)
 
 # Create a custom target to format all source files
 add_custom_target(uncrustify_format
@@ -55,7 +55,7 @@ add_custom_target(uncrustify_format
 )
 
 # Optionally, make uncrustify_format run before build
-# add_dependencies(tracer uncrustify_format)
+add_dependencies(tracer uncrustify_format)
 
 
 # Define the command that generates the output file
