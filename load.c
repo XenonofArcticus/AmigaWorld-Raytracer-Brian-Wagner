@@ -15,96 +15,26 @@ extern struct ViewOpts vopts;
 
 extern int             npoly, nvert;
 
+
+// Lookup arrays for R, G, and B values for convertcol
+float materialLookupR[16] = { 0, 0, 0, 0, 127, 127, 255, 170, 0, 0, 0, 0, 255, 255, 255, 255 };
+float materialLookupG[16] = { 0, 0, 127, 127, 0, 0, 100, 170, 0, 0, 255, 255, 0, 0, 255, 255 };
+float materialLookupB[16] = { 0, 127, 0, 127, 0, 127, 0, 170, 0, 255, 0, 255, 0, 255, 0, 255 };
+
 /* Convert GEO color code to equivalent RGB color values. */
-
-void    convertcol(int col, struct Polygon *poly)
+void convertcol(int col, struct Polygon *poly)
 {
-   switch (col)
+   // Initialize poly with 0,0,0 RGB values
+   poly->r = 0;
+   poly->g = 0;
+   poly->b = 0;
+
+   // Check if col is in the valid range
+   if (col >= 1 && col <= 15)
    {
-   case 0: poly->r = 0;
-      poly->g      = 0;
-      poly->b      = 0;
-      break;
-
-   case 1: poly->r = 0;
-      poly->g      = 0;
-      poly->b      = 127;
-      break;
-
-   case 2: poly->r = 0;
-      poly->g      = 127;
-      poly->b      = 0;
-      break;
-
-   case 3: poly->r = 0;
-      poly->g      = 127;
-      poly->b      = 127;
-      break;
-
-   case 4: poly->r = 127;
-      poly->g      = 0;
-      poly->b      = 0;
-      break;
-
-   case 5: poly->r = 127;
-      poly->g      = 0;
-      poly->b      = 127;
-      break;
-
-   case 6: poly->r = 255;
-      poly->g      = 100;
-      poly->b      = 0;
-      break;
-
-   case 7: poly->r = 170;
-      poly->g      = 170;
-      poly->b      = 170;
-      break;
-
-   case 8: poly->r = 0;
-      poly->g      = 0;
-      poly->b      = 0;
-      break;
-
-   case 9: poly->r = 0;
-      poly->g      = 0;
-      poly->b      = 255;
-      break;
-
-   case 10: poly->r = 0;
-      poly->g       = 255;
-      poly->b       = 0;
-      break;
-
-   case 11: poly->r = 0;
-      poly->g       = 255;
-      poly->b       = 255;
-      break;
-
-   case 12: poly->r = 255;
-      poly->g       = 0;
-      poly->b       = 0;
-      break;
-
-   case 13: poly->r = 255;
-      poly->g       = 0;
-      poly->b       = 255;
-      break;
-
-   case 14: poly->r = 255;
-      poly->g       = 255;
-      poly->b       = 0;
-      break;
-
-   case 15: poly->r = 255;
-      poly->g       = 255;
-      poly->b       = 255;
-      break;
-
-   default: poly->r = 0;
-      poly->g       = 0;
-      poly->b       = 0;
-      break;
+      poly->r = materialLookupR[col];
+      poly->g = materialLookupG[col];
+      poly->b = materialLookupB[col];
    }
 
    return;
