@@ -199,9 +199,6 @@ int     trianglehit(struct Ray *r, struct Triangle *t, struct Intersection *i)
    py = r->oy - t->y1;
    pz = r->oz - t->z1;
 
-   // Compute n Dot product of the vector from the ray origin and the triangle's precomputed normal
-   n = px * nx + py * ny + pz * nz;
-
    // Compute d Dot product of the ray direction and triangle's normal
    d = r->dx * nx + r->dy * ny + r->dz * nz;
 
@@ -210,6 +207,9 @@ int     trianglehit(struct Ray *r, struct Triangle *t, struct Intersection *i)
    {
       return 0;
    }
+
+   // Compute n Dot product of the vector from the ray origin and the triangle's precomputed normal
+   n = px * nx + py * ny + pz * nz;
 
    // Calculate distance along the ray to the intersection point with the plane
    v = -n / d;
