@@ -180,52 +180,68 @@ void calcnormals(void)
 
 int     trianglehit(struct Ray *r, struct Triangle *t, struct Intersection *i)
 {
-   float px, py, pz, n, d, v;
+   // Initialize variables for storing coordinates and intermediate results.
+   float px, py, pz, // multi-use vector
+         n, d, v;
    float ix, iy, iz, x, y;
    float x21, y21, z21, x31, y31, z31;
    float nxx, nxy, nxz, nyx, nyy, nyz;
-   float dxy, dyx, nx, ny, nz;
+   float dxy, dyx,
+         nx, ny, nz; // precomputed normal of the triangle
 
+   // Get the normal of the triangle
    nx = t->nx;
    ny = t->ny;
    nz = t->nz;
 
+   // Calculate the vector from the ray origin to the first triangle vertex
    px = r->ox - t->x1;
    py = r->oy - t->y1;
    pz = r->oz - t->z1;
 
+   // Compute n Dot product of the vector from the ray origin and the triangle's precomputed normal
    n = px * nx + py * ny + pz * nz;
 
+   // Compute d Dot product of the ray direction and triangle's normal
    d = r->dx * nx + r->dy * ny + r->dz * nz;
 
+   // If the d Dot product indicates the ray is parallel to the triangle plane, there's no intersection
    if (d == 0.0)
    {
       return 0;
    }
 
+   // Calculate distance along the ray to the intersection point with the plane
    v = -n / d;
 
+   // If the intersection is behind the ray or further than a previous intersection, ignore it
    if (v <= 0.0 || v > i->dist)
    {
       return 0;
    }
 
+   // Calculate the exact intersection point in 3D space
    ix = (v * r->dx) + r->ox;
    iy = (v * r->dy) + r->oy;
    iz = (v * r->dz) + r->oz;
 
+   // Calculate the vector from the first triangle vertex to the intersection point
    px = ix - t->x1;
    py = iy - t->y1;
    pz = iz - t->z1;
 
+   // Compute vectors from the first vertex to the other two vertices of the triangle
+   // first to second
    x21 = t->x2 - t->x1;
    y21 = t->y2 - t->y1;
    z21 = t->z2 - t->z1;
 
+   // first to third
    x31 = t->x3 - t->x1;
    y31 = t->y3 - t->y1;
    z31 = t->z3 - t->z1;
 
+   // Compute the normal vectors for the triangle's edges
    nxx = ny * z21 - nz * y21;
    nxy = nz * x21 - nx * z21;
    nxz = nx * y21 - ny * x21;
@@ -234,14 +250,16 @@ int     trianglehit(struct Ray *r, struct Triangle *t, struct Intersection *i)
    nyy = nz * x31 - nx * z31;
    nyz = nx * y31 - ny * x31;
 
+   // Calculate the determinant for the area of the sub-triangles
    dxy = 1.0 / (x21 * nyx + y21 * nyy + z21 * nyz);
-
    dyx = 1.0 / (x31 * nxx + y31 * nxy + z31 * nxz);
 
+   // Calculate the barycentric coordinates (x, y) to check if the point is inside the triangle
    n = px * nyx + py * nyy + pz * nyz;
 
    x = n * dxy;
 
+   // If x is outside the triangle (in the negative direction), return 0
    if (x <= 0.0)
    {
       return 0;
@@ -251,24 +269,29 @@ int     trianglehit(struct Ray *r, struct Triangle *t, struct Intersection *i)
 
    y = n * dyx;
 
+   // If y is outside the triangle (in the negative direction), return 0
    if (y <= 0.0)
    {
       return 0;
    }
 
+   // If the point is outside the triangle in the positive direction, return 0
    if (x + y > 1.0)
    {
       return 0;
    }
 
+   // Store the intersection point and distance
    i->ix = ix;
    i->iy = iy;
    i->iz = iz;
 
    i->dist = v;
 
+   // Return 1 to indicate a successful intersection
    return 1;
 }
+
 
 /* Check to see if a ray and polygon intersect. */
 
